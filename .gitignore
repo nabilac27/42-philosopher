@@ -1,0 +1,23 @@
+# Compiled files
+*.o
+*.a
+*.out
+
+# Executables
+philo
+a.out
+
+# Build directories
+build/
+
+# System files
+.DS_Store
+.DS_Store?
+._*
+
+# Editor files
+.vscode/
+.idea/
+
+# Log files
+*.log

@@ -1,32 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/23 19:17:15 by nchairun          #+#    #+#             */
-/*   Updated: 2025/07/23 19:47:50 by nchairun         ###   ########.fr       */
+/*   Created: 2025/07/23 19:37:56 by nchairun          #+#    #+#             */
+/*   Updated: 2025/07/23 19:38:43 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#ifndef PHILO_H
+# define PHILO_H
 
-/*
-    Your program(s) must take the following arguments:
-        1. number_of_philosophers  
-        2. time_to_die 
-        3. time_to_eat 
-        4. time_to_sleep 
-        5. number_of_times_each_philosopher_must_eat
-*/
+# include <stdio.h>
+# include <unistd.h>
 
-int main(int argc, char *argv[])
-{
-    (void)argv;
-    if (!(argc == 5 || argc == 6)) 
-		return(1);
-    
-    printf("Philosopher");
-    return(0);
-}
+
+
+#endif

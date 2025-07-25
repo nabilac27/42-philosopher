@@ -6,69 +6,49 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 20:01:19 by nchairun          #+#    #+#             */
-/*   Updated: 2025/07/25 21:41:21 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/07/25 22:23:03 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-/*
-	TO-DO:
-	* check_valid_args for INT_MIN, INT_MAX numbers
-	* using long
-*/
-
-bool	check_valid_args(int argc, char *argv[])
+bool check_valid_args(int argc, char *argv[])
 {
-	int			i;
-	int			j;
-	long long	value;
+	int i;
 
 	i = 1;
 	while (i < argc)
 	{
-		j = 0;
-		if (argv[i][j] == '+' || argv[i][j] == '-')
-			j++;
-		if (argv[i][j] == '\0')
+		if (!(ft_atoi(argv[i])))
 			return(false);
-		while (argv[i][j])
-		{
-			if (argv[i][j] < '0' || argv[i][j] > '9')
-				return(false);
-			j++;
-		}
-		value = ft_atol(argv[i]);
-		if (value > INT_MAX || value < INT_MIN)
-			return(false);
-
 		i++;
 	}
 	return(true);
 }
 
-long long	ft_atol(char *str)
+int	ft_atoi(char *str)
 {
+	int	i;
+	int	negative;
 	long long	result;
-	int			sign;
-	int			i;
-	
-	result = 0;
-	sign = 1;
-	i = 0;
 
+	i = 0;
+	negative = 1;
+	result = 0;
 	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
-	if (str[i] == '+' || str[i] == '-')
+	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
-			sign = -1;
+			negative = -1 * negative;
 		i++;
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		result = result * 10 + (str[i] - '0');
+		result = (str[i] - '0') + (result * 10);
 		i++;
 	}
-	return (result * sign);
+	if (result < INT_MIN || result > INT_MAX)
+		return (0);
+	return ((int)result * negative);
 }

@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:17:15 by nchairun          #+#    #+#             */
-/*   Updated: 2025/07/23 20:25:41 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/07/25 21:38:38 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 int main(int argc, char *argv[])
 {
-    if (!(argc == 5 || argc == 6) || check_valid_args(argc, argv) == false) 
+    if (!(argc == 5 || argc == 6) || !(check_valid_args(argc, argv))) 
         return(1);
     
     printf("Philosopher \n");

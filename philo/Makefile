@@ -6,7 +6,7 @@
 #    By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/23 19:20:28 by nchairun          #+#    #+#              #
-#    Updated: 2025/07/25 21:21:36 by nchairun         ###   ########.fr        #
+#    Updated: 2025/07/25 21:37:40 by nchairun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,18 +16,18 @@ CC			= cc
 CFLAGS		= -Werror -Wall -Wextra -pthread
 
 
-SRCS_DIR	= srcs
+SRCS_DIR	= src
 SRCS		= $(SRCS_DIR)/main.c \
 			  $(SRCS_DIR)/utils.c
 
 BUILD_DIR	= build
-OBJS		= $(SRCS:$(SRCS_DIR)/%.c=$(BUILD_DIR)/srcs/%.o)
+OBJS		= $(SRCS:$(SRCS_DIR)/%.c=$(BUILD_DIR)/src/%.o)
 
 all: $(NAME)
 
 .SILENT:
 
-$(BUILD_DIR)/srcs/%.o: $(SRCS_DIR)/%.c
+$(BUILD_DIR)/src/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@ -I include/
 

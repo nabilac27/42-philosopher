@@ -4,7 +4,6 @@
 *.out
 
 # Executables
-philo
 a.out
 
 # Build directories

@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:37:56 by nchairun          #+#    #+#             */
-/*   Updated: 2025/07/25 22:24:25 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/07/25 22:29:28 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,7 @@ typedef struct s_table
 bool	    check_valid_args(int argc, char *argv[]);
 int	        ft_atoi(char *str);
 
+// init_structs.c
+ t_table	*init_table(int argc, char **argv);
+ 
 #endif

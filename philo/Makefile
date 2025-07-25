@@ -6,7 +6,7 @@
 #    By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/23 19:20:28 by nchairun          #+#    #+#              #
-#    Updated: 2025/07/25 21:37:40 by nchairun         ###   ########.fr        #
+#    Updated: 2025/07/25 22:31:58 by nchairun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS		= -Werror -Wall -Wextra -pthread
 
 SRCS_DIR	= src
 SRCS		= $(SRCS_DIR)/main.c \
-			  $(SRCS_DIR)/utils.c
+			  $(SRCS_DIR)/utils.c $(SRCS_DIR)/init_structs.c
 
 BUILD_DIR	= build
 OBJS		= $(SRCS:$(SRCS_DIR)/%.c=$(BUILD_DIR)/src/%.o)

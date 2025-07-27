@@ -19,10 +19,8 @@ int main(int argc, char *argv[])
     table = setup_table(argc, argv);
     if (!(table))
 		return(1);
-    // printf("Philosopher! \n");
-    // printf("Initialized: %d philos\n", table->num_philos);
+    printf("✅ Table Initialized\n");
     printf("Number of Philosophers: %d\n", table->num_philos);
-    
     printf("Time to die: %d\n", table->time_to_die);
     printf("Time to eat: %d\n", table->time_to_eat);
     printf("Time to sleep: %d\n", table->time_to_sleep);
@@ -34,6 +32,18 @@ int main(int argc, char *argv[])
             table->philos[i].id, table->philos[i].last_meal_time);
     }
 
+    printf("\n🚀 Launching threads...\n");
+
+    if (!setup_thread(table))
+    {
+        fprintf(stderr, "❌ Failed to launch threads\n");
+        return (1);
+    }
+
+    printf("✅ All threads finished successfully\n");
+
+    free(table->philos);
+    free(table->forks);
     free(table);
-    return(0);
+    return (0);
 }

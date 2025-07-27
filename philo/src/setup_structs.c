@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 22:28:30 by nchairun          #+#    #+#             */
-/*   Updated: 2025/07/26 21:51:37 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/07/27 15:39:36 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 /* TO-DO:
 	- improve setup mutex and philo
 	- Thread routine(eat, sleep, think loop)
+    - destroy_mutex
+    _ Thread monitor 
  */
 
 bool	setup_philo(t_table *table);

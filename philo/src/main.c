@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:17:15 by nchairun          #+#    #+#             */
-/*   Updated: 2025/07/26 21:50:26 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/07/27 15:17:18 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,9 @@ int main(int argc, char *argv[])
     
     if (!(argc == 5 || argc == 6) || !(check_valid_args(argc, argv))) 
         return(1);
-
     table = setup_table(argc, argv);
     if (!(table))
 		return(1);
-
-    free(table);
+    setup_thread(table);
     return(0);
 }

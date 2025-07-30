@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 15:19:00 by nchairun          #+#    #+#             */
-/*   Updated: 2025/07/27 15:38:51 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/07/30 13:37:06 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,14 @@ bool	setup_thread(t_table *table)
 void	*thread_monitor(void *table)
 {
    t_table *p_table = (t_table *)table;
-	(void)p_table;  
-
+	
+	while (table != NULL)
+	{
+		if (meal_round_finished() || philo_died())
+			break ;
+	}
 	printf("thread_monitor\n");
-	return NULL;
+	return(p_table);
 }
 
 void	*thread_routine(void *philo)
@@ -68,4 +72,9 @@ void	*thread_routine(void *philo)
 	usleep(1000 * 500);  // 500 ms
 	printf("Philosopher %d is done.\n", p_philo->id);
 	return NULL;
+}
+
+bool	meal_round_finished(t_data *table)
+{
+
 }

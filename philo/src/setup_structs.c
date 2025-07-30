@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 22:28:30 by nchairun          #+#    #+#             */
-/*   Updated: 2025/07/27 15:39:36 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/07/30 13:32:21 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,25 +37,10 @@ t_table	*setup_table(int argc, char **argv)
 	table->num_must_meals = -1;
 	if (argc == 6)
 		table->num_must_meals = ft_atoi(argv[5]);
-
-	if (!setup_philo(table))
-	{
-		free(table);
-		return (NULL);
-	}
-	if (!table->philos)
-	{
-		free(table);
-		return (NULL);
-	}
-
-	if (!setup_mutex(table))
-	{
-		free(table->philos);
-		free(table);
-		return (NULL);
-	}
-
+	if (!(setup_philo(table)) || !(table->philos))
+		return (free(table), NULL);
+	if (!(setup_mutex(table)))
+		return (free(table->philos), free(table), NULL);
 	return (table);
 }
 
@@ -65,10 +50,9 @@ bool setup_philo(t_table *table)
 	struct timeval	time;
 
     table->philos = malloc(sizeof(t_philo) * table->num_philos);
-    if (!table->philos)
+    if (!(table->philos))
         return false;
     memset(table->philos, 0, sizeof(t_philo) * table->num_philos);
-
     i = 0;
     while (i < table->num_philos)
     {
@@ -81,6 +65,7 @@ bool setup_philo(t_table *table)
     return true;
 }
 
+// setup_mutex*
 int setup_mutex(t_table *table)
 {
     int i;

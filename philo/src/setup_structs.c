@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 22:28:30 by nchairun          #+#    #+#             */
-/*   Updated: 2025/07/30 13:32:21 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/18 09:22:56 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,14 @@
 
 bool	setup_philo(t_table *table);
 int 	setup_mutex(t_table *table);
+
+long gettimeofday_in_ms(void)
+{
+	struct timeval tv;
+    (void)tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000L + tv.tv_usec / 1000L);
+}
 
 t_table	*setup_table(int argc, char **argv)
 {
@@ -47,18 +55,17 @@ t_table	*setup_table(int argc, char **argv)
 bool setup_philo(t_table *table)
 {
     int i;
-	struct timeval	time;
 
     table->philos = malloc(sizeof(t_philo) * table->num_philos);
     if (!(table->philos))
         return false;
     memset(table->philos, 0, sizeof(t_philo) * table->num_philos);
     i = 0;
-    while (i < table->num_philos)
+    while (i < (table->num_philos))
     {
         table->philos[i].id = i + 1;
         table->philos[i].start_meal_time = 0;
-        table->philos[i].last_meal_time = gettimeofday(&time, NULL);;
+        table->philos[i].last_meal_time = gettimeofday_in_ms();
         table->philos[i].table = table;
         i++;
     }
@@ -89,50 +96,74 @@ int setup_mutex(t_table *table)
         i++;
     }
 
-    if (pthread_mutex_init(&table->print_mutex, NULL) != 0)
-    {
-        perror("Print mutex init failed");
-        i = 0;
-        while (i < table->num_philos)
-        {
-            pthread_mutex_destroy(&table->forks[i]);
-            i++;
-        }
-        free(table->forks);
-        return 0;
-    }
+  if (pthread_mutex_init(&table->print_mutex, NULL) != 0  
+    || pthread_mutex_init(&table->death_mutex, NULL) != 0
+    || pthread_mutex_init(&table->meal_mutex, NULL) != 0)
+{
+    perror("Global mutex init failed");
+    
+    // Clean up in reverse order of initialization
+    pthread_mutex_destroy(&table->meal_mutex);
+    pthread_mutex_destroy(&table->death_mutex);
+    pthread_mutex_destroy(&table->print_mutex);
 
-    if (pthread_mutex_init(&table->death_mutex, NULL) != 0)
+    i = 0;
+    while (i < table->num_philos)
     {
-        perror("Death mutex init failed");
-        pthread_mutex_destroy(&table->print_mutex);
-        i = 0;
-        while (i < table->num_philos)
-        {
-            pthread_mutex_destroy(&table->forks[i]);
-            i++;
-        }
-        free(table->forks);
-        return 0;
+        pthread_mutex_destroy(&table->forks[i]);
+        i++;
     }
-
-    if (pthread_mutex_init(&table->meal_mutex, NULL) != 0)
-    {
-        perror("Meal mutex init failed");
-        pthread_mutex_destroy(&table->death_mutex);
-        pthread_mutex_destroy(&table->print_mutex);
-        i = 0;
-        while (i < table->num_philos)
-        {
-            pthread_mutex_destroy(&table->forks[i]);
-            i++;
-        }
-        free(table->forks);
-        return 0;
-    }
-
-    return 1; 
+    free(table->forks);
+    return (0);
 }
+
+    return (1);
+    }
+
+    // if (pthread_mutex_init(&table->print_mutex, NULL) != 0)
+    // {
+    //     perror("Print mutex init failed");
+    //     i = 0;
+    //     while (i < table->num_philos)
+    //     {
+    //         pthread_mutex_destroy(&table->forks[i]);
+    //         i++;
+    //     }
+    //     free(table->forks);
+    //     return 0;
+    // }
+
+    // if (pthread_mutex_init(&table->death_mutex, NULL) != 0)
+    // {
+    //     perror("Death mutex init failed");
+    //     pthread_mutex_destroy(&table->print_mutex);
+    //     i = 0;
+    //     while (i < (table->num_philos))
+    //     {
+    //         pthread_mutex_destroy(&table->forks[i]);
+    //         i++;
+    //     }
+    //     free(table->forks);
+    //     return 0;
+    // }
+
+    // if (pthread_mutex_init(&table->meal_mutex, NULL) != 0)
+    // {
+    //     perror("Meal mutex init failed");
+    //     pthread_mutex_destroy(&table->death_mutex);
+    //     pthread_mutex_destroy(&table->print_mutex);
+    //     i = 0;
+    //     while (i < (table->num_philos))
+    //     {
+    //         pthread_mutex_destroy(&table->forks[i]);
+    //         i++;
+    //     }
+    //     free(table->forks);
+    //     return 0;
+    // }
+
+//     return 1; 
+// }
 
 // t_table	*setup_table(int argc, char **argv)
 // {

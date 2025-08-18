@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:37:56 by nchairun          #+#    #+#             */
-/*   Updated: 2025/07/27 15:23:36 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/18 18:00:20 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@
 # include <sys/time.h>
 # include <string.h>
 
-typedef struct s_table t_table;
+typedef struct s_table	t_table;
 
 typedef struct s_philo
 {
-	int             id;
-	int             num_eaten_meals;
+	int			id;
+	int			num_eaten_meals;
 	long long       start_meal_time;
 	long long       last_meal_time;
 
@@ -63,8 +63,9 @@ int	        ft_atoi(char *str);
 
 // setup_structs.c
 t_table	*setup_table(int argc, char **argv);
-bool setup_philo(t_table *table);
+bool	setup_philo(t_table *table);
 int 	setup_mutex(t_table *table);
+long	gettimeofday_in_ms(void);
 
 // threads.c
 bool	setup_thread(t_table *table);

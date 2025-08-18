@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 22:28:30 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/18 09:22:56 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/18 17:59:44 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@
     _ Thread monitor 
  */
 
-bool	setup_philo(t_table *table);
-int 	setup_mutex(t_table *table);
-
-long gettimeofday_in_ms(void)
+long	gettimeofday_in_ms(void)
 {
 	struct timeval tv;
     (void)tv;

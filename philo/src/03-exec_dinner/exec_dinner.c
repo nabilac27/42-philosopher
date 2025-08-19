@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 20:52:23 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/19 21:17:04 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/19 21:21:48 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void    exec_dinner(t_table *table)
             handle_thread(&table->philos[i].thread_id, dinner_sim, &table->philos[i], CREATE);
     }
         // NOW ALL THREADS READY (PREP_START_SIM)
-        // setter, getter
+        // setter,
 }
 
 /*

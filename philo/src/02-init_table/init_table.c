@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_data.c                                        :+:      :+:    :+:   */
+/*   init_table.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 19:49:03 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/19 21:13:22 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/19 21:22:03 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void init_data(t_table *table)
+void init_table(t_table *table)
 {
     int i;
 
@@ -75,18 +75,4 @@ void *handle_malloc(size_t bytes)
     if (ret_value == NULL)
         error_msg("ERROR: malloc failed");
     return(ret_value);
-}
-
-void handle_mutex(t_mutex *fork, t_mutex_type type)
-{
-    if (type == INIT)
-        pthread_mutex_init(fork, NULL);
-    else if (type == LOCK)
-        pthread_mutex_lock(fork);
-    else if (type == UNLOCK)
-        pthread_mutex_unlock(fork);
-    else if (type == DESTROY)
-        pthread_mutex_unlock(fork);
-    else
-        error_msg("ERROR: handle_mutex failed");
 }

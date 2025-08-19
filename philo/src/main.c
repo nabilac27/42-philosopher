@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:17:15 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/19 19:48:05 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/19 20:52:33 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 	{
 		parse_table(&table, argv);
 		init_data(&table);
-		// exec_dinner(&table); // TO-DO
+		exec_dinner(&table);
 		// clean_table(&table); // TO-DO
 	}
 	else
@@ -43,18 +43,3 @@ void	error_msg(char *msg)
 	printf("%s \n", msg);
 	exit(1);
 }
-// 
-// 
-// 
-// int main(int argc, char *argv[])
-// {
-//     t_table *table;
-    
-//     if (!(argc == 5 || argc == 6) || !(check_valid_args(argc, argv))) 
-//         return(1);
-//     table = setup_table(argc, argv);
-//     if (!(table))
-// 		return(1);
-//     setup_thread(table);
-//     return(0);
-// }

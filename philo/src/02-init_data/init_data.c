@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 19:49:03 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/19 20:47:14 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/19 21:13:22 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,12 @@ void init_data(t_table *table)
 
     i = 0;
     table->end_sim = false;
+    table->prep_start_sim = false;
+        
     table->philos = handle_malloc(table->num_philos);
     table->forks = handle_malloc(table->num_philos);
     init_philo(table);
+    handle_mutex(&table->table_mutex, INIT);
     while(i++ < table->num_philos)
     {
         table->forks[i].fork_id = i;

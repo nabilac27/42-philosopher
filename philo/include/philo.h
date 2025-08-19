@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:37:56 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/18 18:00:20 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/19 17:53:11 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,35 +24,55 @@
 
 typedef struct s_table	t_table;
 
+// typedef struct p_thread_mutex_t
+// {
+// 	p_thread_mutex_t;
+// }
+// 	t_mutex;
+
 typedef struct s_philo
 {
 	int			id;
+	int			num_req_meals;
 	int			num_eaten_meals;
-	long long       start_meal_time;
-	long long       last_meal_time;
+	bool		full;
+	
+	// long long	start_meal_time;
+	long long	last_meal_time;
 
-	pthread_t       thread;
-	pthread_mutex_t *left_fork;
-	pthread_mutex_t *right_fork;
-    
-	t_table         *table;
+	pthread_t	thread;
+	pthread_mutex_t		*left_fork;
+	pthread_mutex_t		*right_fork;
+
+	pthread_t	thread_id;
+	t_table		*table;
 }	t_philo;
+
+typedef struct s_fork 
+{
+	pthread_mutex_t	fork;
+	int				fork_id;
+}	t_fork;
 
 typedef struct s_table
 {
-	int             num_philos;
-	int             time_to_die;
-	int             time_to_eat;
-	int             time_to_sleep;
-	int             num_must_meals;
-	int             death_philo;
-	long long       start_time;
+	long			num_philos;
+	long			time_to_die;
+	long			time_to_eat;
+	long			time_to_sleep;
+	
+	long			num_max_meals;
+	// int			death_philo;
+	long long		start_sim;
+	bool			end_sim;
 
-	pthread_mutex_t *forks;         // Array of fork mutexes
-    pthread_mutex_t print_mutex;    // Mutex for printing
-    pthread_mutex_t death_mutex;    // Mutex for death state
-    pthread_mutex_t meal_mutex;     // Mutex for meal checks
-
+	t_fork			*fork;
+	t_philo			*philo;
+	
+	// pthread_mutex_t	*forks;         // Array of fork mutexes
+    // pthread_mutex_t	print_mutex;    // Mutex for printing
+    // pthread_mutex_t	death_mutex;    // Mutex for death state
+    // pthread_mutex_t	meal_mutex;     // Mutex for meal checks
 	t_philo         *philos;
 }	t_table;
 

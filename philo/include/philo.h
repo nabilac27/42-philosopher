@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:37:56 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/19 19:32:47 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/19 20:04:18 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@ typedef struct s_table	t_table;
 typedef struct s_philo
 {
 	long		philo_id;
-	// long		num_req_meals;
+	bool		full_meals;
 	long		count_eaten_meals;
-	bool		full;
 	long 		last_meal_time;
 	
 	t_fork		*left_fork;

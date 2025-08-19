@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:17:15 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/19 19:46:47 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/19 19:48:05 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     if (argc == 5 || argc == 6)
 	{
 		parse_table(&table, argv);
-		// init_data(&table); // TO_DO
+		init_data(&table);
 		// exec_dinner(&table); // TO-DO
 		// clean_table(&table); // TO-DO
 	}

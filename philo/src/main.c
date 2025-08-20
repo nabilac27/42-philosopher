@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:17:15 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/20 23:01:05 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/21 00:07:19 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,31 +39,18 @@ int	main(int argc, char *argv[])
 
 /*
 	TO-DO:
-	MITTWOCH:
-		* HANDLE_THREAD
-		* EAT
-		* THINK
 		* MONITOR
+		* sim --> routine
 		* CLEANUP
+		* setter, getter
 	DEBUG
 	--
 	DONNERSTAG:
-	THEORIES
-	EVAL
 	FINISHING
 	--
 	FREITAG
 	PREP EVAL
 	ABENDS: LOGIN
-	--
-	03-exec_dinner
-		dinner_sim -> to routine_sim
-		exec_dinner.c
-		utils.c
-		handle_thread.c
-		handle_thread_setter_getter.c
-
-	04-monitor
 	
 */
 
@@ -82,5 +69,6 @@ int	main(int argc, char *argv[])
         	dinner_utils.c
         	handle_thread.c
         	handle_thread_utils.c
+			monitor.c
 	main.c
 */

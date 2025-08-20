@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:37:56 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/20 23:09:05 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/21 00:03:39 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_philo
 	t_fork				*right_fork;
 
 	pthread_t			thread_id;
+	t_mutex				philo_mutex;
 }						t_philo;
 
 typedef struct s_fork
@@ -120,6 +121,7 @@ void					parse_table(t_table *table, char **argv);
 bool					check_valid_args(int argc, char *argv[]);
 long					ft_atol(char *str);
 
+// clean_table.c
 void					error_msg(char *msg);
 
 /* ############################################################
@@ -127,7 +129,7 @@ void					error_msg(char *msg);
 ############################################################ */
 
 // init_table.c
-void					init_data(t_table *table);
+void					init_table(t_table *table);
 void					init_philo(t_table *table);
 void					init_forks(t_philo *philo, t_fork *fork, int philo_pos);
 void					*handle_malloc(size_t bytes);
@@ -143,13 +145,16 @@ void					handle_mutex_status(int status, t_mutex_type type);
 // dinner.c
 void	dinner(t_table *table);
 void	*routine_sim(void *data);
+void 	eat(t_philo *philo);
+void 	think(t_philo *philo);
 
 // handle_thread.c
-
+void 	handle_thread(pthread_t *thread, void *(*foo)(void *), void *data, t_thread_type *type);
+void 	handle_thread_status(int status, t_thread_type  *type);
 
 // handle_thread_utils.c
 void	set_bool(t_mutex *fork, bool *dest, bool value);
-bool	get_bool(t_mutex *fork, bool value);
+bool	get_bool(t_mutex *fork, bool *value);
 long	get_long(t_mutex *fork, long *value);
 void	set_long(t_mutex *fork, long *dest, long value);
 bool	sim_finished(t_table *table);

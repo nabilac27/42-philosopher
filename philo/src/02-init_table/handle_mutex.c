@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 21:19:44 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/20 04:11:02 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/20 23:45:31 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	handle_mutex(t_mutex *fork, t_mutex_type type)
 	else if (type == UNLOCK)
 		handle_mutex_status(pthread_mutex_unlock(fork), type);
 	else if (type == DESTROY)
-		handle_mutex_status(thread_mutex_unlock(fork), type);
+		handle_mutex_status(pthread_mutex_destroy(fork), type);
 	else
 		error_msg("ERROR: handle_mutex failed");
 }

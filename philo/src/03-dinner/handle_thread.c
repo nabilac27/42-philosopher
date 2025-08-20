@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 05:28:31 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/20 05:32:06 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/20 23:54:16 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,38 @@
 
 void handle_thread(pthread_t *thread, void *(*foo)(void *), void *data, t_thread_type *type)
 {
-    if (type == CREATE)
-        pthread_create((thread, NULL, foo, data), type);
+    if (*type == CREATE)
+        handle_thread_status(pthread_create(thread, NULL, foo, data), type);
+    else if (*type == JOIN)
+        handle_thread_status(pthread_join(*thread, NULL), type);
+    else if (*type == DETACH)
+        handle_thread_status(pthread_detach(*thread), type);
+    else
+        error_msg("ERROR: handle_thread");
+}
+
+void handle_thread_status(int status, t_thread_type  *type)
+{
+    if (status == 0)
+        return;
+    
+    printf("Thread error: status=%d, type=%d\n", status, *type);
+    
+    if (status == EAGAIN)
+        error_msg("ERROR: handle_thread - EAGAIN (insufficient resources)");
+    else if (status == EPERM)
+        error_msg("ERROR: handle_thread - EPERM (permission denied)");
+    else if (status == EINVAL && *type == CREATE)
+        error_msg("ERROR: handle_thread - EINVAL CREATE (invalid attributes)");
+    else if (status == EINVAL && (*type == JOIN || *type == DETACH))
+        error_msg("ERROR: handle_thread - EINVAL JOIN/DETACH (thread not joinable)");
+    else if (status == ESRCH)
+        error_msg("ERROR: handle_thread - ESRCH (thread not found)");
+    else if (status == EDEADLK)
+        error_msg("ERROR: handle_thread - EDEADLK (deadlock detected)");
+    else
+    {
+        printf("Unknown thread error: status=%d, type=%d\n", status, *type);
+        error_msg("ERROR: handle_thread - unknown error");
+    }
 }

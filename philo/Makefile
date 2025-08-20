@@ -6,7 +6,7 @@
 #    By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/23 19:20:28 by nchairun          #+#    #+#              #
-#    Updated: 2025/08/20 04:22:19 by nchairun         ###   ########.fr        #
+#    Updated: 2025/08/20 23:10:51 by nchairun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,12 +24,14 @@ CFLAGS		= -Werror -Wall -Wextra -pthread -I include
 ###############################################################
 
 SRCS_DIR	= src
-SRCS		= $(SRCS_DIR)/main.c 						\
-			  $(SRCS_DIR)/01-parsing/parse_table.c		\
-			  $(SRCS_DIR)/02-init_table/init_table.c	\
-			  $(SRCS_DIR)/02-init_table/handle_mutex.c	\
-			  $(SRCS_DIR)/03-exec_dinner/exec_dinner.c	\
-			  $(SRCS_DIR)/03-exec_dinner/synchro_philos.c
+SRCS		= $(SRCS_DIR)/main.c 							\
+			  $(SRCS_DIR)/01-parse_table/parse_table.c		\
+			  $(SRCS_DIR)/02-init_table/init_table.c		\
+			  $(SRCS_DIR)/02-init_table/handle_mutex.c		\
+			  $(SRCS_DIR)/03-dinner/dinner.c				\
+			  $(SRCS_DIR)/03-dinner/handle_thread.c			\
+			  $(SRCS_DIR)/03-dinner/handle_thread_utils.c	\
+			  $(SRCS_DIR)/03-dinner/utils.c					\
 
 BUILD_DIR	= build
 OBJS		= $(SRCS:$(SRCS_DIR)/%.c=$(BUILD_DIR)/src/%.o)

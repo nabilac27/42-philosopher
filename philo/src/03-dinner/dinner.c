@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_dinner.c                                      :+:      :+:    :+:   */
+/*   dinner.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -23,7 +23,7 @@
 	4.) JOIN everyone
 */
 
-void	exec_dinner(t_table *table)
+void	dinner(t_table *table)
 {
 	int	i;
 
@@ -36,7 +36,7 @@ void	exec_dinner(t_table *table)
 	{
 		while (i++ < table->num_philos)				
 		{
-			handle_thread(&table->philos[i].thread_id, dinner_sim,
+			handle_thread(&table->philos[i].thread_id, routine_sim,
 			&table->philos[i], CREATE);
 		}
 		
@@ -61,7 +61,7 @@ void	exec_dinner(t_table *table)
 	2. sychnronize all
 	3. endless loop philo
 */
-void	*dinner_sim(void *data)
+void	*routine_sim(void *data)
 {
 	t_philo	*philo;
 
@@ -84,18 +84,4 @@ void	*dinner_sim(void *data)
 		// to-do think
 	}
 	return (NULL);
-}
-
-void	usleep_micro(long time_to_sleep)
-{
-	long	start_time;
-
-	start_time = gettime(MICROSECOND);      // get current time in microseconds
-	if (time_to_sleep > 1000000L)        // optional: for long sleeps, first half
-		usleep(time_to_sleep / 2);
-	else
-		usleep(time_to_sleep / 2);       // for short sleeps, same logic
-
-	while (gettime(MICROSECOND) < start_time + time_to_sleep)
-		usleep(50);                         // fine-tune with small sleeps
 }

@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:37:56 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/20 05:04:10 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/20 23:09:05 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <sys/time.h>
 
 typedef pthread_mutex_t	t_mutex;
+typedef struct s_fork	t_fork;
 typedef struct s_philo	t_philo;
-typedef struct s_ohilo	t_table;
 typedef struct s_table	t_table;
 
 /* ############################################################
@@ -112,7 +112,7 @@ typedef enum e_philo_status
 
 
 /* ############################################################
-##						01-parsing			 	 			 ##
+##				    	01-parse_table			  			 ##
 ############################################################ */
 
 // parse_table.c
@@ -137,23 +137,27 @@ void					handle_mutex(t_mutex *fork, t_mutex_type type);
 void					handle_mutex_status(int status, t_mutex_type type);
 
 /* ############################################################
-##						03-exec_dinner						 ##
+##						03-dinner							 ##
 ############################################################ */
 
-// exec_dinner.c
-void	exec_dinner(t_table *table);
-void	*dinner_sim(void *data);
-void	usleep_micro(long time_to_sleep_us);
+// dinner.c
+void	dinner(t_table *table);
+void	*routine_sim(void *data);
 
-// setter_getter.c
+// handle_thread.c
+
+
+// handle_thread_utils.c
 void	set_bool(t_mutex *fork, bool *dest, bool value);
 bool	get_bool(t_mutex *fork, bool value);
 long	get_long(t_mutex *fork, long *value);
 void	set_long(t_mutex *fork, long *dest, long value);
 bool	sim_finished(t_table *table);
 
-// synchro_philos.c
+// utils.c
+void	usleep_micro(long time_to_sleep_us);
 void    wait_all_threads(t_table *table);
 long 	gettime(t_time_type type);
+void    print_status(t_philo *philo, t_philo_status status);
 
 #endif

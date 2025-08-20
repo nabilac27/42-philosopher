@@ -6,11 +6,27 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:17:15 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/20 04:09:28 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/20 23:01:05 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+
+int	main(int argc, char *argv[])
+{
+	t_table	table;
+
+	if (argc == 5 || argc == 6)
+	{
+		parse_table(&table, argv);
+		init_table(&table);
+		dinner(&table);
+		// clean_table(&table); // TO-DO
+	}
+	else
+		error_msg("ERROR: Invalid number of arguments");
+	return (0);
+}
 
 /*
 	Your program(s) must take the following arguments:
@@ -21,18 +37,50 @@
 		5. number_of_times_each_philosopher_must_eat
 */
 
-int	main(int argc, char *argv[])
-{
-	t_table	table;
+/*
+	TO-DO:
+	MITTWOCH:
+		* HANDLE_THREAD
+		* EAT
+		* THINK
+		* MONITOR
+		* CLEANUP
+	DEBUG
+	--
+	DONNERSTAG:
+	THEORIES
+	EVAL
+	FINISHING
+	--
+	FREITAG
+	PREP EVAL
+	ABENDS: LOGIN
+	--
+	03-exec_dinner
+		dinner_sim -> to routine_sim
+		exec_dinner.c
+		utils.c
+		handle_thread.c
+		handle_thread_setter_getter.c
 
-	if (argc == 5 || argc == 6)
-	{
-		parse_table(&table, argv);
-		init_table(&table);
-		exec_dinner(&table);
-		// clean_table(&table); // TO-DO
-	}
-	else
-		error_msg("ERROR: Invalid number of arguments");
-	return (0);
-}
+	04-monitor
+	
+*/
+
+/*
+	include/
+    	philo.h
+	src/
+    	parse_table/
+        	clean_table.c
+        	parse_table.c
+    	init_table/
+        	init_table.c
+        	handle_mutex.c
+    	dinner/
+        	dinner.c
+        	dinner_utils.c
+        	handle_thread.c
+        	handle_thread_utils.c
+	main.c
+*/

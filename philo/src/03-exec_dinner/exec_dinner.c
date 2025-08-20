@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 20:52:23 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/19 22:47:13 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/20 05:21:09 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,30 @@ void	exec_dinner(t_table *table)
 	i = 0;
 	if (table->num_must_meals = 0)
 		return ;
-	// else if (table->num_must_meals = 1)
-		// TO-DO
+	else if (table->num_philos == 1);
+		
 	else
+	{
+		while (i++ < table->num_philos)				
 		{
-			while (i++ < table->num_philos)
-				handle_thread(&table->philos[i].thread_id, dinner_sim,
-					&table->philos[i], CREATE);
+			handle_thread(&table->philos[i].thread_id, dinner_sim,
+			&table->philos[i], CREATE);
 		}
+		
+	}
+	// start of simulation
+	table->start_sim = gettime(MILISECOND);
+	
 	// NOW ALL THREADS READY (wait_all_threads)
     set_bool(&table->table_mutex, &table->threads_ready, true);
+
+	// Wait for everyone
+	i = 0;
+
+	while(i++ < table->num_philos)
+		handle_thread(&table->philos[i].thread_id, NULL, NULL, JOIN);
+
+	// if reach this means all philos are full
 }
 
 /*
@@ -55,5 +69,33 @@ void	*dinner_sim(void *data)
 
     // spinlock
 	wait_all_threads(philo->table); // TO-DO;
+
+	// set last meal time
+	while (!(sim_finished(philo->table)))
+	{
+		if (philo->full_meals) // to-do: thread safe?
+			break;
+
+		// to-do eat
+		// TO-DO SLEEP : write status, precise usleep
+		print_status(philo, SLEEP);
+		usleep_micro(philo->table->time_to_sleep);
+		
+		// to-do think
+	}
 	return (NULL);
+}
+
+void	usleep_micro(long time_to_sleep)
+{
+	long	start_time;
+
+	start_time = gettime(MICROSECOND);      // get current time in microseconds
+	if (time_to_sleep > 1000000L)        // optional: for long sleeps, first half
+		usleep(time_to_sleep / 2);
+	else
+		usleep(time_to_sleep / 2);       // for short sleeps, same logic
+
+	while (gettime(MICROSECOND) < start_time + time_to_sleep)
+		usleep(50);                         // fine-tune with small sleeps
 }

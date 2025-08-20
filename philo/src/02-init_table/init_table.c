@@ -18,7 +18,7 @@ void	init_table(t_table *table)
 
 	i = 0;
 	table->end_sim = false;
-	table->prep_start_sim = false;
+	table->threads_ready = false;
 	table->philos = handle_malloc(table->num_philos);
 	table->forks = handle_malloc(table->num_philos);
 	init_philo(table);

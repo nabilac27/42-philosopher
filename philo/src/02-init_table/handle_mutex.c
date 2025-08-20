@@ -6,13 +6,11 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 21:19:44 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/19 22:21:03 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/20 04:11:02 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-
-void	handle_mutex_status(int status, t_mutex_type type);
 
 void	handle_mutex(t_mutex *fork, t_mutex_type type)
 {

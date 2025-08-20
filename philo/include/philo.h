@@ -6,26 +6,51 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:37:56 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/19 22:45:07 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/20 05:04:10 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <errno.h>
-# include <limits.h>
-# include <pthread.h>
-# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-# include <sys/time.h>
 # include <unistd.h>
+# include <stdbool.h>
+# include <limits.h>
+# include <pthread.h>
+# include <errno.h>
+# include <sys/time.h>
 
 typedef pthread_mutex_t	t_mutex;
-typedef struct s_fork	t_fork;
+typedef struct s_philo	t_philo;
+typedef struct s_ohilo	t_table;
 typedef struct s_table	t_table;
+
+/* ############################################################
+##			STRUCT	--	t_table,  t_philo,  t_fork		  	 ##
+############################################################ */
+
+typedef struct s_table
+{
+	long				num_philos;
+	long				time_to_die;
+	long				time_to_eat;
+	long				time_to_sleep;
+	long				num_must_meals;
+
+	long				start_sim;
+	bool				end_sim;
+	bool 				threads_ready; // synchro philos
+
+	t_fork				*forks;
+	t_philo				*philos;
+
+	t_mutex table_mutex; // TO AVOID RACES WHILE READING FROM TABLE
+	t_mutex	print_mutex;
+}						t_table;
+
 typedef struct s_philo
 {
 	long				philo_id;
@@ -47,23 +72,11 @@ typedef struct s_fork
 	int					fork_id;
 }						t_fork;
 
-typedef struct s_table
-{
-	long				num_philos;
-	long				time_to_die;
-	long				time_to_eat;
-	long				time_to_sleep;
-	long				num_must_meals;
 
-	long				start_sim;
-	bool				end_sim;
-	bool 				threads_ready; // synchro philos
 
-	t_fork				*forks;
-	t_philo				*philos;
-
-	t_mutex table_mutex; // TO AVOID RACES WHILE READING FROM TABLE
-}						t_table;
+/* ######################################################################
+## ENUM --	t_mutex_type,  t_thread_type,  t_time_type, t_philo_status ##
+###################################################################### */
 
 typedef enum e_mutex_type
 {
@@ -76,28 +89,61 @@ typedef enum e_mutex_type
 typedef enum e_thread_type
 {
 	CREATE,
+	JOIN,
+	DETACH,
 }						t_thread_type;
 
-// main.c
-void					error_msg(char *msg);
+typedef enum e_time_type
+{
+	SECOND,
+	MILISECOND,
+	MICROSECOND,
+}	t_time_type;
+
+typedef enum e_philo_status
+{
+	EAT,
+	SLEEP,
+	THINK,
+	TAKE_LEFT_FORK,
+	TAKE_RIGHT_FORK,
+	DEAD,
+}	t_philo_status;
+
+
+/* ############################################################
+##						01-parsing			 	 			 ##
+############################################################ */
 
 // parse_table.c
 void					parse_table(t_table *table, char **argv);
 bool					check_valid_args(int argc, char *argv[]);
 long					ft_atol(char *str);
 
+void					error_msg(char *msg);
+
+/* ############################################################
+##						02-init_table		  				 ##
+############################################################ */
+
 // init_table.c
 void					init_data(t_table *table);
 void					init_philo(t_table *table);
 void					init_forks(t_philo *philo, t_fork *fork, int philo_pos);
+void					*handle_malloc(size_t bytes);
 
 // handle_mutex.c
-void					*handle_malloc(size_t bytes);
 void					handle_mutex(t_mutex *fork, t_mutex_type type);
+void					handle_mutex_status(int status, t_mutex_type type);
+
+/* ############################################################
+##						03-exec_dinner						 ##
+############################################################ */
 
 // exec_dinner.c
 void	exec_dinner(t_table *table);
 void	*dinner_sim(void *data);
+void	usleep_micro(long time_to_sleep_us);
 
 // setter_getter.c
 void	set_bool(t_mutex *fork, bool *dest, bool value);
@@ -108,5 +154,6 @@ bool	sim_finished(t_table *table);
 
 // synchro_philos.c
 void    wait_all_threads(t_table *table);
+long 	gettime(t_time_type type);
 
 #endif

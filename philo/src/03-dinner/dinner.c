@@ -42,24 +42,22 @@ void	dinner(t_table *table)
 		return ;
 	}
 	// TODO: Monitor
-	else
+	// Monitor the simulation
+	handle_thread(&table->monitor, monitor_dinner, table, CREATE);
+
+
+	while (i < table->num_philos)				
 	{
-		while (i < table->num_philos)				
-		{
-			handle_thread(&table->philos[i].thread_id, routine_sim,
-			&table->philos[i], &create_type);
-			i++;
-		}
+		handle_thread(&table->philos[i].thread_id, routine_sim,
+		&table->philos[i], &create_type);
+		i++;
+	}
 		
-		// start of simulation
-		table->start_sim = gettime(MILISECOND);
+	// start of simulation
+	table->start_sim = gettime(MILISECOND);
 		
-		// NOW ALL THREADS READY (wait_all_threads)
-		set_bool(&table->table_mutex, &table->threads_ready, true);
-		
-		// Monitor the simulation
-		monitor_simulation(table);
-	};
+	// NOW ALL THREADS READY (wait_all_threads)
+	set_bool(&table->table_mutex, &table->threads_ready, true);
 
 	// Wait for everyone - only if we have multiple philosophers
 	if (table->num_philos > 1)
@@ -72,7 +70,19 @@ void	dinner(t_table *table)
 		}
 	}
 
-	// if reach this means all philos are full
+	// // if reach this means all philos are full
+	set_bool(&table->table_mutex, &table->end_simulation, true);
+	handle_thread(&table->monitor, NULL, NULL, JOIN);
+}
+
+void *dinner_monitor(void *data)
+{
+    t_table *table;
+
+    table = (t_table *)data;
+
+    
+    
 }
 
 /*
@@ -89,6 +99,10 @@ void	*routine_sim(void *data)
     // spinlock
 	wait_all_threads(philo->table); // TO-DO;
 
+	// synchro with monitor
+
+	// increase table variable coutner, with all threads running
+
 	// set last meal time
 	while (!(sim_finished(philo->table)))
 	{
@@ -98,7 +112,6 @@ void	*routine_sim(void *data)
 		eat(philo);
 		print_status(philo, SLEEP);
 		usleep_micro(philo->table->time_to_sleep);
-	
 		think(philo);
 	}
 	return (NULL);

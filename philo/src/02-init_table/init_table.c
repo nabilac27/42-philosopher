@@ -19,6 +19,7 @@ void	init_table(t_table *table)
 	i = 0;
 	table->end_sim = false;
 	table->threads_ready = false;
+	table->num_threads_ready = 0;
 	table->philos = handle_malloc(sizeof(t_philo) * table->num_philos);
 	table->forks = handle_malloc(sizeof(t_fork) * table->num_philos);
 	handle_mutex(&table->table_mutex, INIT);

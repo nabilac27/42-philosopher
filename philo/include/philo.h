@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:37:56 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/21 00:03:39 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/21 15:26:46 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ typedef struct s_table
 	long				start_sim;
 	bool				end_sim;
 	bool 				threads_ready; // synchro philos
-
+	long				num_threads_ready;
+	
 	t_fork				*forks;
 	t_philo				*philos;
 
@@ -144,9 +145,12 @@ void					handle_mutex_status(int status, t_mutex_type type);
 
 // dinner.c
 void	dinner(t_table *table);
-void	*routine_sim(void *data);
-void 	eat(t_philo *philo);
-void 	think(t_philo *philo);
+void 	*dinner_monitor(void *data);
+
+// dinner_utils.c
+void	usleep_micro(long time_to_sleep_us);
+void    wait_all_threads(t_table *table);
+long 	gettime(t_time_type type);
 
 // handle_thread.c
 void 	handle_thread(pthread_t *thread, void *(*foo)(void *), void *data, t_thread_type *type);
@@ -159,10 +163,11 @@ long	get_long(t_mutex *fork, long *value);
 void	set_long(t_mutex *fork, long *dest, long value);
 bool	sim_finished(t_table *table);
 
-// utils.c
-void	usleep_micro(long time_to_sleep_us);
-void    wait_all_threads(t_table *table);
-long 	gettime(t_time_type type);
+// routine.c
+void	*routine_sim(void *data);
+void 	eat(t_philo *philo);
+// void 	sleep(t_philo *philo); 
+void 	think(t_philo *philo);
 void    print_status(t_philo *philo, t_philo_status status);
 
 #endif

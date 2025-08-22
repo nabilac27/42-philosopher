@@ -94,9 +94,8 @@ void	*routine_sim(void *data)
 			break;
 
 		eat(philo);
-		print_status(philo, SLEEP);
-		usleep_micro(philo->table->time_to_sleep);
-		think(philo);
+		sleeps(philo);
+		think(philo, false);
 	}
 	return (NULL);
 }
@@ -111,7 +110,7 @@ void    *dinner_monitor(void *data)
     // make sure all philo runs
     // spinlock untill all thread run
     while (!is_all_threads_running(&table->table_mutex, table->num_threads_running, &table->num_philos));
-    // }       to-do
+    usleep(10);
     
     // check time to die constantly
 	while (!sim_finished(table))

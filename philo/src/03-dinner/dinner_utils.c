@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 22:35:08 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/22 03:58:18 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/22 16:08:20 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@
 	3. endless loop philo
 */
 
-
 #include "../include/philo.h"
+
+void	take_time(long usec, t_table *table);
 
 void eat(t_philo *philo)
 {
@@ -43,11 +44,70 @@ void eat(t_philo *philo)
 	handle_mutex(&philo->right_fork->fork, UNLOCK);
 }
 
-void think(t_philo *philo)
+void	think(t_philo *philo, bool is_initial)
 {
-	print_status(philo, THINK);
+	long	t_eat;
+	long	t_sleep;
+	long	t_think;
+
+	if (!is_initial)
+		print_status(philo, THINK);
+	if (philo->table->num_philos % 2 == 0)
+		return ;
+	t_eat = philo->table->time_to_eat;
+	t_sleep = philo->table->time_to_sleep;
+	t_think = t_eat * 2 - t_sleep;
+	if (t_think < 0)
+		t_think = 0;
+	take_time(t_think * 0.5, philo->table);
 }
 
+
+void sleeps(t_philo *philo)
+{
+	usleep_micro(philo->table->time_to_sleep);
+	print_status(philo, SLEEP);
+}
+
+void	take_time(long usec, t_table *table)
+{
+	long	start;
+	long	passed;
+	long	remain;
+
+	start = gettime(MICROSECOND);
+	while (gettime(MICROSECOND) - start < usec)
+	{
+		if (sim_finished(table))
+			break ;
+		passed = gettime(MICROSECOND) - start;
+		remain = usec - passed;
+		if (remain > 1000)
+			usleep(remain / 2);
+		else
+			while (gettime(MICROSECOND) - start < usec)
+				usleep(10);
+	}
+}
+
+// TO-DO: THINK
+// void	think(t_philo *philo, bool is_inital_phase)
+// {
+// 	long	t_eat;
+// 	long	t_sleep;
+// 	long	t_think;
+
+// 	if (!is_inital_phase)
+// 		print_status(philo, THINK);
+// 	if (philo->info->num_philos % 2 == 0)
+// 		return ;
+// 	t_eat = philo->info->time_to_eat;
+// 	t_sleep = philo->info->time_to_sleep;
+// 	t_think = t_eat * 2 - t_sleep;
+// 	if (t_think < 0)
+// 		t_think = 0;
+// 	take_time(t_think * 0.5, philo->info);
+// }
 
 void	usleep_micro(long time_to_sleep)
 {

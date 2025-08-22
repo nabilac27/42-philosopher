@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:17:15 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/22 03:19:05 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/22 04:10:25 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	main(int argc, char *argv[])
 */
 
 /*
+	TO_DO: Think, Sleep, Monitor, Deadlock
 	include/
     	philo.h
 	src/
@@ -49,10 +50,10 @@ int	main(int argc, char *argv[])
         	handle_mutex.c
     	dinner/
         	dinner.c
+			dinner_monitor.c
         	dinner_utils.c
         	handle_thread.c
         	handle_thread_utils.c
-			monitor.c
 	main.c
 */
 

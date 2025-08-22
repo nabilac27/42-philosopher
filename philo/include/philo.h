@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:37:56 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/22 03:40:11 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/22 16:05:31 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,8 @@ void    print_status(t_philo *philo, t_philo_status status);
 
 // dinner_utils.c
 void	eat(t_philo *philo);
-void 	think(t_philo *philo);
+void	think(t_philo *philo, bool is_initial);
+void 	sleeps(t_philo *philo);
 void	usleep_micro(long time_to_sleep_us);
 long 	gettime(t_time_type type);
 

@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:17:15 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/22 02:40:07 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/22 03:19:05 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,6 @@ int	main(int argc, char *argv[])
 */
 
 /*
-	TO-DO:
-		* sim --> routine
-		* CLEANUP
-		* setter, getter
-	DEBUG
-	--
-	DONNERSTAG:
-	FINISHING
-	--
-	FREITAG
-	PREP EVAL
-	ABENDS: LOGIN
-	
-*/
-
-/*
 	include/
     	philo.h
 	src/
@@ -70,4 +54,8 @@ int	main(int argc, char *argv[])
         	handle_thread_utils.c
 			monitor.c
 	main.c
+*/
+
+/*
+	
 */

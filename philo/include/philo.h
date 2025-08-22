@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:37:56 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/22 02:52:55 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/22 03:28:23 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ bool					check_valid_args(int argc, char *argv[]);
 long					ft_atol(char *str);
 
 // clean_table.c
+// clean_table
 void					error_msg(char *msg);
 
 /* ############################################################
@@ -147,14 +148,13 @@ void					handle_mutex_status(int status, t_mutex_type type);
 // dinner.c
 void	dinner(t_table *table);
 void 	*dinner_monitor(void *data);
-// clean_table
 
 // dinner_utils.c
 void	usleep_micro(long time_to_sleep_us);
 long 	gettime(t_time_type type);
 void    wait_all_threads(t_table *table);
-// all_threads_running
-// 	wait_all_threads(philo->table); 
+bool	is_dead_philo(t_philo *philo);
+bool	is_all_threads_running(t_mutex *fork, long num_philos, long *threads);
 
 // handle_thread.c
 void 	handle_thread(pthread_t *thread, void *(*foo)(void *), void *data, t_thread_type *type);
@@ -173,6 +173,55 @@ void 	eat(t_philo *philo);
 // void 	sleep(t_philo *philo); 
 void 	think(t_philo *philo);
 void    print_status(t_philo *philo, t_philo_status status);
-void    *dinner_monitor(void *data);
 
 #endif
+
+/*
+	// 01-parse_table (1)
+	// parse_table.c
+	void					parse_table(t_table *table, char **argv);
+	bool					check_valid_args(int argc, char *argv[]);
+	long					ft_atol(char *str);
+	// clean_table
+	void					error_msg(char *msg);
+
+	// 02-init_table (2)
+	// init_table.c
+	void					init_table(t_table *table);
+	void					init_philo(t_table *table);
+	void					init_forks(t_philo *philo, t_fork *fork, int philo_pos);
+	void					*handle_malloc(size_t bytes);
+
+	// handle_mutex.c
+	void					handle_mutex(t_mutex *fork, t_mutex_type type);
+	void					handle_mutex_status(int status, t_mutex_type type);
+
+	// 03-dinner (4)
+	// dinner.c
+	void	dinner(t_table *table);
+	void 	*dinner_monitor(void *data);
+	void	*routine_sim(void *data);
+	void    print_status(t_philo *philo, t_philo_status status);
+	
+	// dinner_utils.c
+	void 	eat(t_philo *philo);
+	// void 	sleep(t_philo *philo); 
+	void 	think(t_philo *philo);
+	void	usleep_micro(long time_to_sleep_us);
+	long 	gettime(t_time_type type);
+	
+	// handle_thread.c
+	void 	handle_thread(pthread_t *thread, void *(*foo)(void *), void *data, t_thread_type *type);
+	void 	handle_thread_status(int status, t_thread_type  *type);
+	void    wait_all_threads(t_table *table);
+	// all_threads_running
+	// 
+	
+	// handle_thread_utils.c !!
+	void	set_bool(t_mutex *fork, bool *dest, bool value);
+	bool	get_bool(t_mutex *fork, bool *value);
+	long	get_long(t_mutex *fork, long *value);
+	void	set_long(t_mutex *fork, long *dest, long value);
+	bool	is_routine_finished(t_table *table);
+	
+*/

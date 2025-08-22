@@ -43,7 +43,7 @@ void	dinner(t_table *table)
 	}
 	// TODO: Monitor
 	// Monitor the simulation
-	handle_thread(&table->monitor, monitor_dinner, table, CREATE);
+	handle_thread(&table->monitor, dinner_monitor, table, CREATE);
 
 
 	while (i < table->num_philos)				
@@ -75,12 +75,3 @@ void	dinner(t_table *table)
 	handle_thread(&table->monitor, NULL, NULL, JOIN);
 }
 
-void *dinner_monitor(void *data)
-{
-    t_table *table;
-
-    table = (t_table *)data;
-
-    
-    
-}

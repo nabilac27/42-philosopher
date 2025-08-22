@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 18:57:17 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/20 04:09:33 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/22 02:54:38 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,3 @@ long	ft_atol(char *str)
 	return ((int)result * negative);
 }
 
-void	error_msg(char *msg)
-{
-	printf("%s \n", msg);
-	exit(1);
-}

@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 15:28:04 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/22 02:49:47 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/22 03:28:19 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,38 @@ void    *dinner_monitor(void *data)
         i = 0;
         while (i++ < table->num_must_meals && !sim_finished(table))
         {
-            if (dead_philo(table->philos + i)) // TO-DO
+            if (is_dead_philo(table->philos + i)) // TO-DO
             {
                 set_bool(&table->table_mutex, &table->end_sim, true);
                 print_status(DEAD, table->philos + i);
             }
         }
+		usleep(10);
     }
+}
+bool	is_dead_philo(t_philo *philo)
+{
+	long	elapsed;
+	// long time_to_die_ms;
+
+	if (get_value_bool(&philo->philo_mutex, &philo->full_meals))
+		return (false);
+	elapsed = gettime(MILISECOND) - get_value_long(&philo->philo_mutex,
+			&philo->last_meal_time);
+	// time_to_die_ms = philo->time_to_die / 1000;
+	// if (elapsed > time_to_die_ms)
+	// 	return (true);
+	return (false);
+}
+
+bool	is_all_threads_running(t_mutex *fork, long num_philos, long *threads)
+{
+	bool	ret;
+
+	ret = false;
+	handle_mutex(fork, LOCK);
+	if (*threads == num_philos)
+		ret = true;
+	handle_mutex(fork, UNLOCK);
+	return (ret);
 }

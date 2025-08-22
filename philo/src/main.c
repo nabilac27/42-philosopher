@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:17:15 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/21 00:07:19 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/22 02:40:07 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	main(int argc, char *argv[])
 
 /*
 	TO-DO:
-		* MONITOR
 		* sim --> routine
 		* CLEANUP
 		* setter, getter

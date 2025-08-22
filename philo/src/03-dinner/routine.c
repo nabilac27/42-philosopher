@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 15:28:04 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/21 15:28:29 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/22 02:49:47 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	*routine_sim(void *data)
 	wait_all_threads(philo->table); // TO-DO;
 
 	// synchro with monitor
-
+    dinner_monitor(&data);
+    
 	// increase table variable coutner, with all threads running
 
 	// set last meal time
@@ -69,4 +70,31 @@ void eat(t_philo *philo)
 void think(t_philo *philo)
 {
 	print_status(philo, THINK);
+}
+
+void    *dinner_monitor(void *data)
+{
+    int     i;
+    t_table *table;
+
+    table = (t_table *)data;
+    
+    // make sure all philo runs
+    // spinlock untill all thread run
+    while (!all_threads_running(&table->table_mutex, &table->num_threads_running, table->num_philos))
+    // }       to-do
+    
+    // check time to die constantly
+    while (!sim_finished(table))
+    {
+        i = 0;
+        while (i++ < table->num_must_meals && !sim_finished(table))
+        {
+            if (dead_philo(table->philos + i)) // TO-DO
+            {
+                set_bool(&table->table_mutex, &table->end_sim, true);
+                print_status(DEAD, table->philos + i);
+            }
+        }
+    }
 }

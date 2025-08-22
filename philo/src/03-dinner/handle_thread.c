@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 05:28:31 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/20 23:54:16 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/22 03:37:34 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,23 @@ void handle_thread_status(int status, t_thread_type  *type)
         printf("Unknown thread error: status=%d, type=%d\n", status, *type);
         error_msg("ERROR: handle_thread - unknown error");
     }
+}
+
+bool	is_all_threads_running(t_mutex *fork, long num_philos, long *threads)
+{
+	bool	ret;
+
+	ret = false;
+	handle_mutex(fork, LOCK);
+	if (*threads == num_philos)
+		ret = true;
+	handle_mutex(fork, UNLOCK);
+	return (ret);
+}
+
+
+void    wait_all_threads(t_table *table)
+{
+    while(!(get_bool(&table->table_mutex, &table->threads_ready)))
+    ;
 }

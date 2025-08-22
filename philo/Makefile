@@ -6,7 +6,7 @@
 #    By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/23 19:20:28 by nchairun          #+#    #+#              #
-#    Updated: 2025/08/20 23:12:32 by nchairun         ###   ########.fr        #
+#    Updated: 2025/08/22 03:41:30 by nchairun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,9 +29,9 @@ SRCS		= $(SRCS_DIR)/main.c 							\
 			  $(SRCS_DIR)/02-init_table/init_table.c		\
 			  $(SRCS_DIR)/02-init_table/handle_mutex.c		\
 			  $(SRCS_DIR)/03-dinner/dinner.c				\
+			  $(SRCS_DIR)/03-dinner/dinner_utils.c			\
 			  $(SRCS_DIR)/03-dinner/handle_thread.c			\
 			  $(SRCS_DIR)/03-dinner/handle_thread_utils.c	\
-			  $(SRCS_DIR)/03-dinner/utils.c					\
 
 BUILD_DIR	= build
 OBJS		= $(SRCS:$(SRCS_DIR)/%.c=$(BUILD_DIR)/src/%.o)

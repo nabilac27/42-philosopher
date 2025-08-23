@@ -6,7 +6,7 @@
 #    By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/23 19:20:28 by nchairun          #+#    #+#              #
-#    Updated: 2025/08/23 07:54:20 by nchairun         ###   ########.fr        #
+#    Updated: 2025/08/23 09:03:16 by nchairun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,17 +25,15 @@ CFLAGS		= -Werror -Wall -Wextra -pthread -I include
 
 SRCS_DIR	= src
 SRCS		= $(SRCS_DIR)/main.c 							\
-			  $(SRCS_DIR)/01-parse/parse.c					\
 			  $(SRCS_DIR)/01-parse/clean.c					\
-			  $(SRCS_DIR)/02-init/init_table_struct.c		\
-			  $(SRCS_DIR)/02-init/init_philo_struct.c		\
+			  $(SRCS_DIR)/01-parse/parse.c					\
 			  $(SRCS_DIR)/02-init/handle_mutex.c			\
-			  $(SRCS_DIR)/03-dinner/dinner.c				\
-			  $(SRCS_DIR)/03-dinner/dinner_utils.c			\
-			  $(SRCS_DIR)/03-dinner/dinner_monitor.c		\
-			  $(SRCS_DIR)/03-dinner/handle_times.c			\
-			  $(SRCS_DIR)/04-threads/handle_thread.c		\
-			  $(SRCS_DIR)/04-threads/handle_thread_utils.c	\
+			  $(SRCS_DIR)/02-init/init_philo_struct.c		\
+			  $(SRCS_DIR)/02-init/init_table_struct.c		\
+			  $(SRCS_DIR)/03-threads/threads.c				\
+			  $(SRCS_DIR)/04-routines/monitor_routine.c		\
+			  $(SRCS_DIR)/04-routines/philo_routine.c		\
+			  $(SRCS_DIR)/04-routines/utils.c				\
 
 BUILD_DIR	= build
 OBJS		= $(SRCS:$(SRCS_DIR)/%.c=$(BUILD_DIR)/src/%.o)

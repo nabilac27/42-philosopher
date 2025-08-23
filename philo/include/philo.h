@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:37:56 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 07:52:45 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 09:11:16 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_philo	t_philo;
 typedef struct s_table	t_table;
 
 /* ############################################################
-##			STRUCT	--	t_table,  t_philo,  t_fork  			 ##
+			STRUCT	--	t_table,  t_philo,  t_fork
 ############################################################ */
 
 typedef struct s_table
@@ -40,7 +40,7 @@ typedef struct s_table
 	long				time_to_sleep;
 	long				num_must_meals;
 	long				start_sim;
-	bool				is_routine_finished;
+	bool				end_sim;
 	bool				is_all_threads_ready;
 	long				num_threads_ready;
 	long				num_threads_running;
@@ -71,7 +71,7 @@ typedef struct s_fork
 }						t_fork;
 
 /* ######################################################################
-## ENUM --	t_mutex_type,  t_thread_type,  t_time_type, t_philo_status ##
+   ENUM --	t_mutex_type,  t_thread_type,  t_time_type, t_philo_status
 ###################################################################### */
 
 typedef enum e_mutex_type
@@ -107,7 +107,7 @@ typedef enum e_philo_status
 }						t_philo_status;
 
 /* ############################################################
-##						src/01-parse							##
+						src/01-parse
 ############################################################ */
 
 // parse_table.c
@@ -118,7 +118,7 @@ void					clean(t_table *table);
 void					error_msg(char *msg);
 
 /* ############################################################
-##						src/02-init_table					 ##
+						src/02-init_table
 ############################################################ */
 
 // init_table_struct.c
@@ -131,48 +131,31 @@ void					*handle_malloc(size_t bytes);
 void					handle_mutex(t_mutex *fork, t_mutex_type type);
 
 /* ############################################################
-##						src/03-dinner							##
+						src/03-threads
 ############################################################ */
 
-// dinner.c
-void					dinner(t_table *table);
-void					*routine_sim(void *data);
-
-// dinner_utils.c
-void					eat(t_philo *philo);
-void					think(t_philo *philo, bool is_initial);
-void					sleeps(t_philo *philo);
-void					*philo_1(void *arg);
-void					print_status(t_philo *philo, t_philo_status status);
-
-// dinner_monitor.c
-void					*dinner_monitor(void *data);
-bool					sim_finished(t_table *table);
-bool					is_dead_philo(t_philo *philo);
-
-// handle_times.c
-void					initial_delay(t_philo *philo);
-void					delay_time(long usec, t_table *table);
-void					usleep_micro(long time_to_sleep);
-long					gettime(t_time_type type);
+// threads.c
+void					init_philo_threads(t_table *table);
+void					init_monitor_thread(t_table *table);
+void					wait_all_philo_threads_finish(t_table *table);
+void					wait_monitor_thread_finish(t_table *table);
 
 /* ############################################################
-##							src/04-threads						 ##
+						src/04-routines
 ############################################################ */
 
-// handle_thread.c
-void					handle_thread(pthread_t *thread, void *(*foo)(void *),
-							void *data, t_thread_type *type);
-void					handle_thread_status(int status, t_thread_type *type);
-void					wait_all_threads(t_table *table);
-bool					is_all_threads_running(t_mutex *fork, long num_philos,
-							long *threads);
+// philo_routine.c
+void					*philo_routine(void *arg);
 
-// handle_thread_utils.c
-void					set_bool(t_mutex *fork, bool *dest, bool value);
-bool					get_bool(t_mutex *fork, bool *value);
-long					get_long(t_mutex *fork, long *value);
-void					set_long(t_mutex *fork, long *dest, long value);
-bool					sim_finished(t_table *table);
+// monitor_routine.c
+void					log_status(t_philo *philo, const char *status);
+void					*monitor_routine(void *arg);
+
+// utils.c
+void					initial_delay(t_philo *philo);
+void					delay_time(long usec, t_table *table);
+long					get_time_ms(void);
+void					precise_sleep(long duration_us);
+long					get_elapsed_time(t_table *table);
 
 #endif

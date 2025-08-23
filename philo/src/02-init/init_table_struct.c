@@ -36,7 +36,7 @@ void	init_table_struct(t_table *table)
 	int	i;
 
 	i = 0;
-	table->is_routine_finished = false;
+	table->end_sim = false;
 	table->is_all_threads_ready = false;
 	table->num_threads_ready = 0;
 	table->philos = handle_malloc(sizeof(t_philo) * table->num_philos);

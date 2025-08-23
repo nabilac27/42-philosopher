@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:17:15 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 07:58:16 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 09:01:44 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,11 @@ int main(int argc, char *argv[])
     {
 		parse(&table, argc, argv);
         init_table_struct(&table);
-
-        // // 3️⃣ Start philosopher threads
-        // init_philo_threads(&table);
-
-        // // 4️⃣ Start monitor thread
-        // start_monitor_thread(&table);
-
-        // // 5️⃣ Wait for all philosopher threads to finish
-        // wait_all_philo_threads_finish(&table);
-
-        // // 6️⃣ Wait for monitor thread to finish
-        // wait_monitor_thread_finish(&table);
-
-        // // 7️⃣ Clean up resources: destroy mutexes, free memory
-        // clean(&table);
+        init_philo_threads(&table);
+        init_monitor_thread(&table);
+        wait_all_philo_threads_finish(&table);
+        wait_monitor_thread_finish(&table);
+        clean(&table);
     }
     else
         error_msg("ERROR: Invalid Arguments");

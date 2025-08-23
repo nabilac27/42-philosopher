@@ -6,12 +6,9 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 07:41:47 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 10:03:02 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 14:46:08 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// Deadlock prevention: even philosophers pick right fork firs
-// Normal assignment: left = current, right = next
 
 #include "../include/philo.h"
 

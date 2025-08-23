@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:37:56 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 13:16:27 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 15:17:49 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ typedef struct s_table	t_table;
 typedef struct s_table
 {
 	long				num_philos;
-	unsigned long				time_to_die;
-	unsigned long				time_to_eat;
+	unsigned long		time_to_die;
+	unsigned long		time_to_eat;
 	long				time_to_sleep;
 	long				num_must_meals;
 	long				start_sim;
@@ -125,14 +125,22 @@ void					wait_all_philo_threads_finish(t_table *table);
 void					wait_monitor_thread_finish(t_table *table);
 
 /* src/04-routines */
-void					*philo_routine(void *arg);
-void					log_status(t_philo *philo, const char *status);
+/* monitor_routine */
 void					*monitor_routine(void *arg);
+void					log_status(t_philo *philo, const char *status);
 
-/* src/04-routines/utils */
+/* philo_routine */
+void					*philo_routine(void *arg);
+
+/* philo_routine_utils */
+void					eat(t_philo *philo);
+void					sleep_philo(t_philo *philo);
+void					think(t_philo *philo);
+
+/* time_utils */
 void					initial_delay(t_philo *philo);
 void					delay_time(long usec, t_table *table);
 long					gettime(t_time_type type);
-void precise_sleep(long duration_ms, t_table *table);
+void					precise_sleep(long duration_ms, t_table *table);
 
 #endif

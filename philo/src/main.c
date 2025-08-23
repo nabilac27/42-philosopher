@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:17:15 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 07:19:00 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 07:58:16 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     if (argc == 5 || argc == 6)
     {
 		parse(&table, argc, argv);
-        // init_table(&table);
+        init_table_struct(&table);
 
         // // 3️⃣ Start philosopher threads
         // init_philo_threads(&table);

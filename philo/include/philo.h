@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:37:56 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 07:21:03 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 07:52:45 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_philo	t_philo;
 typedef struct s_table	t_table;
 
 /* ############################################################
-##			STRUCT	--	t_table,  t_philo,  t_fork  	   	 ##
+##			STRUCT	--	t_table,  t_philo,  t_fork  			 ##
 ############################################################ */
 
 typedef struct s_table
@@ -107,7 +107,7 @@ typedef enum e_philo_status
 }						t_philo_status;
 
 /* ############################################################
-##						src/01-parse						 ##
+##						src/01-parse							##
 ############################################################ */
 
 // parse_table.c
@@ -118,21 +118,20 @@ void					clean(t_table *table);
 void					error_msg(char *msg);
 
 /* ############################################################
-##					   src/02-init_table					 ##
+##						src/02-init_table					 ##
 ############################################################ */
 
-// init_table.c
-void					init_table(t_table *table);
-void					init_philo(t_table *table);
-void					init_forks(t_philo *philo, t_fork *fork, int philo_pos);
-void					*handle_malloc(size_t bytes);
+// init_table_struct.c
+
+void					init_philo_struct(t_table *table);
+void					init_table_struct(t_table *table);
 
 // handle_mutex.c
+void					*handle_malloc(size_t bytes);
 void					handle_mutex(t_mutex *fork, t_mutex_type type);
-void					handle_mutex_status(int status, t_mutex_type type);
 
 /* ############################################################
-##						src/03-dinner						 ##
+##						src/03-dinner							##
 ############################################################ */
 
 // dinner.c
@@ -158,7 +157,7 @@ void					usleep_micro(long time_to_sleep);
 long					gettime(t_time_type type);
 
 /* ############################################################
-##						 src/04-threads						 ##
+##							src/04-threads						 ##
 ############################################################ */
 
 // handle_thread.c

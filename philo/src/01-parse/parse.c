@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 18:57:17 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 07:22:23 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 07:25:26 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	parse(t_table *table, int argc, char **argv)
 	{
 		table->num_must_meals = ft_atol(argv[5]);
 		if (table->num_must_meals < 1)
-			error_msg("ERROR: parse_table()");
+			error_msg("ERROR: parse_table() -- invalid num_must_meals");
 	}
 	else
 		table->num_must_meals = -1;

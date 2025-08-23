@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:37:56 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/22 16:05:31 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 03:51:39 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ void	think(t_philo *philo, bool is_initial);
 void 	sleeps(t_philo *philo);
 void	usleep_micro(long time_to_sleep_us);
 long 	gettime(t_time_type type);
+void	delay_time(long usec, t_table *table);
 
 // handle_thread.c
 void 	handle_thread(pthread_t *thread, void *(*foo)(void *), void *data, t_thread_type *type);

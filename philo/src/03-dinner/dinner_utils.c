@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 22:35:08 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/22 16:08:20 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 03:51:29 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 #include "../include/philo.h"
 
-void	take_time(long usec, t_table *table);
+void	delay_time(long usec, t_table *table);
 
 void eat(t_philo *philo)
 {
@@ -59,7 +59,7 @@ void	think(t_philo *philo, bool is_initial)
 	t_think = t_eat * 2 - t_sleep;
 	if (t_think < 0)
 		t_think = 0;
-	take_time(t_think * 0.5, philo->table);
+	delay_time(t_think * 0.5, philo->table);
 }
 
 
@@ -69,7 +69,7 @@ void sleeps(t_philo *philo)
 	print_status(philo, SLEEP);
 }
 
-void	take_time(long usec, t_table *table)
+void	delay_time(long usec, t_table *table)
 {
 	long	start;
 	long	passed;
@@ -106,7 +106,7 @@ void	take_time(long usec, t_table *table)
 // 	t_think = t_eat * 2 - t_sleep;
 // 	if (t_think < 0)
 // 		t_think = 0;
-// 	take_time(t_think * 0.5, philo->info);
+// 	delay_time(t_think * 0.5, philo->info);
 // }
 
 void	usleep_micro(long time_to_sleep)

@@ -22,6 +22,11 @@ void	init_table(t_table *table)
 	table->num_threads_ready = 0;
 	table->philos = handle_malloc(sizeof(t_philo) * table->num_philos);
 	table->forks = handle_malloc(sizeof(t_fork) * table->num_philos);
+
+	if (table->num_philos < 1 || table->time_to_die < 1 || table->time_to_eat < 1
+		|| table->time_to_sleep < 1)
+		error_msg("ERROR: init_table()");
+
 	handle_mutex(&table->table_mutex, INIT);
 	handle_mutex(&table->print_mutex, INIT);
 	

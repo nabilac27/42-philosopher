@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 18:57:17 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/22 03:32:49 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 03:26:58 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,17 @@ void	parse_table(t_table *table, char **argv)
 	table->time_to_die = ft_atol(argv[2]) * 1000;
 	table->time_to_eat = ft_atol(argv[3]) * 1000;
 	table->time_to_sleep = ft_atol(argv[4]) * 1000;
-	// if (table->time_to_die < 60 || table->time_to_eat < 60
-	// || table->time_to_sleep < 60
-	//     error_msg("ERROR: Timestamp must be more than 60ms");
+	if(table->num_philos < 1)
+		error_msg("ERROR: Philos must be more than 0");
+	if (table->num_philos < 1 || table->time_to_die < 1 || table->time_to_eat < 1
+			|| table->time_to_sleep < 1)
+		error_msg("ERROR: parse_table()");
 	if (argv[5])
+	{
 		table->num_must_meals = ft_atol(argv[5]);
+		if (table->num_must_meals < 1)
+			error_msg("ERROR: parse_table()");
+	}
 	else
 		table->num_must_meals = -1;
 }

@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:37:56 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 04:44:28 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 06:36:35 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,13 @@ typedef struct s_table
 	long				time_to_eat;
 	long				time_to_sleep;
 	long				num_must_meals;
-
 	long				start_sim;
 	bool				is_routine_finished;
-	
-	// synchro philos
 	bool				is_all_threads_ready;
 	long				num_threads_ready;
 	long				num_threads_running;
-
 	t_fork				*forks;
 	t_philo				*philos;
-
-	// TO AVOID RACES WHILE READING FROM TABLE
 	t_mutex				table_mutex;
 	t_mutex				print_mutex;
 	pthread_t			monitor;
@@ -60,15 +54,12 @@ typedef struct s_table
 typedef struct s_philo
 {
 	long				philo_id;
-	bool 				is_full;
 	long				count_eaten_meals;
 	long				last_meal_time;
-
+	bool				is_full;
 	t_table				*table;
-
 	t_fork				*left_fork;
 	t_fork				*right_fork;
-
 	pthread_t			thread_id;
 	t_mutex				philo_mutex;
 }						t_philo;

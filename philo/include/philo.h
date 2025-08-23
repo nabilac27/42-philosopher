@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:37:56 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 06:36:35 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 07:21:03 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,7 @@ typedef enum e_philo_status
 ############################################################ */
 
 // parse_table.c
-void					parse(t_table *table, char **argv);
-bool					check_valid_args(int argc, char *argv[]);
-long					ft_atol(char *str);
+void					parse(t_table *table, int argc, char **argv);
 
 // clean_table.c
 void					clean(t_table *table);

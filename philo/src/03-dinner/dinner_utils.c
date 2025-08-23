@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 22:35:08 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 03:51:29 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 04:41:26 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 */
 
 #include "../include/philo.h"
-
-void	delay_time(long usec, t_table *table);
 
 void eat(t_philo *philo)
 {
@@ -37,7 +35,7 @@ void eat(t_philo *philo)
 	usleep_micro(philo->table->time_to_eat);
 
 	if((philo->table->num_must_meals > 0 && philo->count_eaten_meals) == philo->table->num_must_meals)
-		set_bool(&philo->philo_mutex, &philo->full_meals, true);
+		set_bool(&philo->philo_mutex, &philo->is_full, true);
 
 	// 3
 	handle_mutex(&philo->left_fork->fork, UNLOCK);
@@ -69,79 +67,40 @@ void sleeps(t_philo *philo)
 	print_status(philo, SLEEP);
 }
 
-void	delay_time(long usec, t_table *table)
+void	*philo_1(void *arg)
 {
-	long	start;
-	long	passed;
-	long	remain;
+	t_philo	*philo;
 
-	start = gettime(MICROSECOND);
-	while (gettime(MICROSECOND) - start < usec)
-	{
-		if (sim_finished(table))
-			break ;
-		passed = gettime(MICROSECOND) - start;
-		remain = usec - passed;
-		if (remain > 1000)
-			usleep(remain / 2);
-		else
-			while (gettime(MICROSECOND) - start < usec)
-				usleep(10);
-	}
+	philo = (t_philo *)arg;
+	wait_all_threads(philo->table);
+	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILISECOND));
+	handle_mutex(&philo->table->table_mutex, LOCK);
+	philo->table->num_threads_running++;
+	handle_mutex(&philo->table->table_mutex, UNLOCK);
+	print_status(philo, TAKE_LEFT_FORK);
+	while (!sim_finished(philo->table))
+		usleep(200);
+	return (NULL);
 }
 
-// TO-DO: THINK
-// void	think(t_philo *philo, bool is_inital_phase)
-// {
-// 	long	t_eat;
-// 	long	t_sleep;
-// 	long	t_think;
-
-// 	if (!is_inital_phase)
-// 		print_status(philo, THINK);
-// 	if (philo->info->num_philos % 2 == 0)
-// 		return ;
-// 	t_eat = philo->info->time_to_eat;
-// 	t_sleep = philo->info->time_to_sleep;
-// 	t_think = t_eat * 2 - t_sleep;
-// 	if (t_think < 0)
-// 		t_think = 0;
-// 	delay_time(t_think * 0.5, philo->info);
-// }
-
-void	usleep_micro(long time_to_sleep)
+void	print_status(t_philo *philo, t_philo_status status)
 {
-	long	start_time;
+	long	time;
 
-	start_time = gettime(MICROSECOND);      // get current time in microseconds
-	if (time_to_sleep > 1000000L)        // optional: for long sleeps, first half
-		usleep(time_to_sleep / 2);
-	else
-		usleep(time_to_sleep / 2);       // for short sleeps, same logic
-
-	while (gettime(MICROSECOND) < start_time + time_to_sleep)
-		usleep(50);                         // fine-tune with small sleeps
-}
-
-// gettimeofday
-// time_code -> SECONDS MILIESECONDS MICROSECONDS
-// chronometer?
-
-long gettime(t_time_type type)
-{
-    struct  timeval tv;
-    
-    if (gettimeofday(&tv, NULL))
-        error_msg("ERROR: gettimeofday failed");
-    if (type == SECOND)
-        return(tv.tv_sec + (tv.tv_usec / 1000000));
-    if (type == MILISECOND)
-        return((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-    if (type == MICROSECOND)
-        return((tv.tv_sec * 1000000) + tv.tv_usec); 
-    else
-    {
-        error_msg("ERROR: gettimeofday failed");
-        return (0);
-    }
+	time = gettime(MILISECOND) - (philo->table->start_sim);
+	if (philo->is_full)
+		return ;
+	handle_mutex(&philo->table->print_mutex, LOCK);
+	if ((status == TAKE_LEFT_FORK || status == TAKE_RIGHT_FORK)
+		&& !sim_finished(philo->table))
+		printf("%ld %ld has taken a fork\n", time, philo->philo_id);
+	else if ((status == EAT) && !sim_finished(philo->table))
+		printf("%ld %ld is eating\n", time, philo->philo_id);
+	else if ((status == SLEEP) && !sim_finished(philo->table))
+		printf("%ld %ld is sleeping\n", time, philo->philo_id);
+	else if ((status == THINK) && !sim_finished(philo->table))
+		printf("%ld %ld is thinking\n", time, philo->philo_id);
+	else if ((status == DEAD) && !sim_finished(philo->table))
+		printf("%ld %ld is died\n", time, philo->philo_id);
+	handle_mutex(&philo->table->print_mutex, UNLOCK);
 }

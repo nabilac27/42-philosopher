@@ -6,14 +6,14 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 18:57:17 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 03:26:58 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 04:42:56 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philo.h"
 
 
-void	parse_table(t_table *table, char **argv)
+void	parse(t_table *table, char **argv)
 {
 	table->num_philos = ft_atol(argv[1]);
 	table->time_to_die = ft_atol(argv[2]) * 1000;
@@ -77,25 +77,3 @@ long	ft_atol(char *str)
 	return ((int)result * negative);
 }
 
-void	error_msg(char *msg)
-{
-	printf("%s \n", msg);
-	exit(1);
-}
-
-void    clean(t_table   *table)
-{
-    t_philo *philo;
-    int     i;
-
-    i = 0;
-    while (i++ < table->num_philos)
-    {
-        philo = table->philos + i;
-        handle_mutex(&philo->philo_mutex, DESTROY);
-    }
-    handle_mutex(&table->print_mutex, DESTROY);
-    handle_mutex(&table->table_mutex, DESTROY);
-    free(table->forks);
-    free(table->philos);
-}

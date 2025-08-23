@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setter_getter.c                                    :+:      :+:    :+:   */
+/*   handle_thread_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 04:24:23 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/20 04:41:41 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 04:23:09 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,4 @@ void	set_long(t_mutex *fork, long *dest, long value)
     handle_mutex(fork, LOCK);
     *dest = value;
     handle_mutex(fork, UNLOCK);
-}
-
-bool	sim_finished(t_table *table)
-{
-    return(get_bool(&table->table_mutex, &table->end_sim));
 }

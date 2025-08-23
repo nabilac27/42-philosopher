@@ -1,29 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   clean_table.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/23 19:17:15 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 04:43:08 by nchairun         ###   ########.fr       */
+/*   Created: 2025/08/23 04:12:40 by nchairun          #+#    #+#             */
+/*   Updated: 2025/08/23 04:13:00 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	main(int argc, char *argv[])
+void	error_msg(char *msg)
 {
-	t_table	table;
+	printf("%s \n", msg);
+	exit(1);
+}
 
-	if (argc == 5 || argc == 6)
-	{
-		parse(&table, argv);
-		init_table(&table);
-		dinner(&table);
-		clean(&table);
-	}
-	else
-		error_msg("ERROR: Invalid number of arguments");
-	return (0);
+void    clean(t_table   *table)
+{
+    t_philo *philo;
+    int     i;
+
+    i = 0;
+    while (i++ < table->num_philos)
+    {
+        philo = table->philos + i;
+        handle_mutex(&philo->philo_mutex, DESTROY);
+    }
+    handle_mutex(&table->print_mutex, DESTROY);
+    handle_mutex(&table->table_mutex, DESTROY);
+    free(table->forks);
+    free(table->philos);
 }

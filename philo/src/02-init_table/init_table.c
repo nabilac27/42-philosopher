@@ -17,19 +17,16 @@ void	init_table(t_table *table)
 	int	i;
 
 	i = 0;
-	table->end_sim = false;
-	table->threads_ready = false;
+	table->is_routine_finished = false;
+	table->is_all_threads_ready = false;
 	table->num_threads_ready = 0;
 	table->philos = handle_malloc(sizeof(t_philo) * table->num_philos);
 	table->forks = handle_malloc(sizeof(t_fork) * table->num_philos);
-
-	if (table->num_philos < 1 || table->time_to_die < 1 || table->time_to_eat < 1
-		|| table->time_to_sleep < 1)
+	if (table->num_philos < 1 || table->time_to_die < 1
+		|| table->time_to_eat < 1 || table->time_to_sleep < 1)
 		error_msg("ERROR: init_table()");
-
 	handle_mutex(&table->table_mutex, INIT);
 	handle_mutex(&table->print_mutex, INIT);
-	
 	while (i < table->num_philos)
 	{
 		table->forks[i].fork_id = i;
@@ -49,7 +46,7 @@ void	init_philo(t_table *table)
 	{
 		philo = table->philos + i;
 		philo->philo_id = i + 1;
-		philo->full_meals = false;
+		philo->is_full = false;
 		philo->count_eaten_meals = 0;
 		philo->table = table;
 		handle_mutex(&philo->philo_mutex, INIT);
@@ -61,12 +58,11 @@ void	init_philo(t_table *table)
 // first fork: left, second fork: right
 void	init_forks(t_philo *philo, t_fork *fork, int philo_pos)
 {
-	int num_philos;
-	
+	int	num_philos;
+
 	num_philos = philo->table->num_philos;
 	philo->left_fork = &fork[philo_pos];
 	philo->right_fork = &fork[(philo_pos + 1) % num_philos];
-	
 	// TO AVOID DEADLOCK: odd numbered philosophers pick right fork first
 	if (philo->philo_id % 2 == 0)
 	{

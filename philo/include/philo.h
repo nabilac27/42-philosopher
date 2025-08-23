@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:37:56 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 09:35:59 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 09:58:27 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_table
 	long				time_to_eat;
 	long				time_to_sleep;
 	long				num_must_meals;
-
+	long				start_sim;
 	bool				end_sim;
 	bool				is_all_threads_ready;
 	long				num_threads_ready;
@@ -96,6 +96,12 @@ typedef enum e_thread_type
 	DETACH,
 }						t_thread_type;
 
+typedef enum e_time_type
+{
+	MILISECOND,
+	MICROSECOND
+}						t_time_type;
+
 /* ############################################################
    PROTOTYPES
 ############################################################ */
@@ -123,8 +129,9 @@ void					log_status(t_philo *philo, const char *status);
 void					*monitor_routine(void *arg);
 
 /* src/04-routines/utils */
+void					initial_delay(t_philo *philo);
 void					delay_time(long usec, t_table *table);
-long					get_time_ms(void);
+long					gettime(t_time_type type);
 void					precise_sleep(long duration_us);
 
 #endif

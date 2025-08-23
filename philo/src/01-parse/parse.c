@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 18:57:17 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 07:25:26 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 09:38:23 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,5 @@ void	parse(t_table *table, int argc, char **argv)
 		table->num_must_meals = -1;
 	if (table->num_philos < 1 || table->time_to_die < 1
 		|| table->time_to_eat < 1 || table->time_to_sleep < 1)
-		error_msg("ERROR: parse() -- Number of philos and times must be at least 1");
+		error_msg("ERROR: parse() -- Number of philos and times");
 }

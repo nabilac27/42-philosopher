@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 08:13:11 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 09:10:12 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 10:10:59 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	eat(t_philo *philo)
 	}
 	// 2️⃣ Eat
 	handle_mutex(&philo->philo_mutex, LOCK);
-	philo->last_meal_time = get_time_ms();
+	philo->last_meal_time = gettime(MILISECOND);
 	philo->count_eaten_meals++;
 	if (table->num_must_meals > 0
 		&& philo->count_eaten_meals >= table->num_must_meals)
@@ -79,7 +79,9 @@ void	*philo_routine(void *arg)
 	philo = (t_philo *)arg;
 	table = philo->table;
 	wait_for_all_threads_ready(table);
-	// Main loop
+	handle_mutex(&philo->philo_mutex, LOCK);
+    philo->last_meal_time = gettime(MILISECOND);
+    handle_mutex(&philo->philo_mutex, UNLOCK);
 	initial_delay(philo);
 	while (!(table->end_sim) && !(philo->is_full))
 	{

@@ -6,19 +6,20 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 07:41:47 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 08:52:30 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 10:03:02 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// Deadlock prevention: even philosophers pick right fork firs
+// Normal assignment: left = current, right = next
 
 #include "../include/philo.h"
 
 void	assign_forks(t_philo *philo, t_fork *forks, int philo_pos,
 		int num_philos)
 {
-	// Normal assignment: left = current, right = next
 	philo->left_fork = &forks[philo_pos];
 	philo->right_fork = &forks[(philo_pos + 1) % num_philos];
-	// Deadlock prevention: even philosophers pick right fork firs
 	if (philo->philo_id % 2 == 0)
 	{
 		philo->left_fork = &forks[(philo_pos + 1) % num_philos];
@@ -36,6 +37,7 @@ void	init_philo_struct(t_table *table)
 	{
 		philo = &table->philos[i];
 		philo->philo_id = i + 1;
+		philo->last_meal_time = gettime(MILISECOND);
 		philo->is_full = false;
 		philo->count_eaten_meals = 0;
 		philo->table = table;

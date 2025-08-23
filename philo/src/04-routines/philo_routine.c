@@ -6,13 +6,13 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 08:13:11 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 10:54:09 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 11:55:14 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	take_forks(t_philo *philo)
+static void	take_forks(t_philo *philo)
 {
 	if (philo->philo_id % 2 == 0)
 	{
@@ -28,6 +28,12 @@ void	take_forks(t_philo *philo)
 		handle_mutex(&philo->right_fork->fork, LOCK);
 		log_status(philo, "has taken a fork");
 	}
+}
+
+static void	release_forks(t_philo *philo)
+{
+	handle_mutex(&philo->left_fork->fork, UNLOCK);
+	handle_mutex(&philo->right_fork->fork, UNLOCK);
 }
 
 void	eat(t_philo *philo)
@@ -45,10 +51,8 @@ void	eat(t_philo *philo)
 	handle_mutex(&philo->philo_mutex, UNLOCK);
 	log_status(philo, "is eating");
 	precise_sleep(table->time_to_eat);
-	handle_mutex(&philo->left_fork->fork, UNLOCK);
-	handle_mutex(&philo->right_fork->fork, UNLOCK);
+	release_forks(philo);
 }
-
 
 void	sleep_philo(t_philo *philo)
 {
@@ -56,80 +60,63 @@ void	sleep_philo(t_philo *philo)
 	precise_sleep(philo->table->time_to_sleep);
 }
 
-void	wait_for_all_threads_ready(t_table *table)
+void	think(t_philo *philo)
 {
+	log_status(philo, "is thinking");
+}
+
+static void	wait_for_all_threads_ready(t_philo *philo)
+{
+	t_table	*table;
+
+	table = philo->table;
 	handle_mutex(&table->table_mutex, LOCK);
+	philo->last_meal_time = gettime(MILISECOND);
 	table->num_threads_ready++;
-	table->philos->last_meal_time = gettime(MILISECOND);
 	if (table->num_threads_ready == table->num_philos)
+	{
 		table->is_all_threads_ready = true;
+		table->start_sim = gettime(MILISECOND);
+	}
 	handle_mutex(&table->table_mutex, UNLOCK);
 	while (!table->is_all_threads_ready)
 		usleep(100);
 }
 
-// void	*philo_routine(void *arg)
-// {
-// 	t_philo	*philo;
-// 	t_table	*table;
-
-// 	philo = (t_philo *)arg;
-// 	table = philo->table;
-// 	wait_for_all_threads_ready(table);
-// 	initial_delay(philo);
-// 	while (!(table->end_sim) && !(philo->is_full))
-// 	{
-// 		eat(philo);
-// 		sleep_philo(philo);
-// 		log_status(philo, "is thinking");
-// 	}
-// 	return (NULL);
-// }
-
-void	count_ready_threads(t_philo *philo)
+static void	run_single_philosopher(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->table->table_mutex);
-	philo->table->num_threads_ready++;
-	pthread_mutex_unlock(&philo->table->table_mutex);
-}
-
-int	count_threds_to_philo(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->table->table_mutex);
-	if (philo->table->num_threads_ready == philo->table->num_philos)
-	{
-		pthread_mutex_unlock(&philo->table->table_mutex);
-		return (true);
-	}
-	else
-	{
-		pthread_mutex_unlock(&philo->table->table_mutex);
-		return (false);
-	}
+	handle_mutex(&philo->left_fork->fork, LOCK);
+	log_status(philo, "has taken a fork");
+	precise_sleep(philo->table->time_to_die);
+	handle_mutex(&philo->left_fork->fork, UNLOCK);
 }
 
 void	*philo_routine(void *arg)
-{	
-	t_philo	*philo;
+{
+	t_philo *philo = (t_philo *)arg;
+	t_table *table = philo->table;
 
-	philo = (t_philo *)arg;
-	count_ready_threads(philo);
-	while (count_threds_to_philo(philo) == false)
+	wait_for_all_threads_ready(philo);
+
+	if (table->num_philos == 1)
 	{
-		usleep(42);
+		run_single_philosopher(philo);
+		return (NULL);
 	}
-	if (philo->table->num_philos == 1)
-	{
-		log_status(philo, "has taken a fork");
-		return (philo);
-	}
+
 	if (philo->philo_id % 2 == 0)
 		usleep(2000);
-	while(1)
+
+	while (!table->end_sim && !philo->is_full)
 	{
 		eat(philo);
+		if (table->end_sim || philo->is_full)
+			break ;
 		sleep_philo(philo);
-		log_status(philo, "is thinking");
+		if (table->end_sim || philo->is_full)
+			break ;
+		think(philo);
 	}
-	return (philo);
+
+	return (NULL);
 }

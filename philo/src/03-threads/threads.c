@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 08:00:32 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 09:01:38 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 12:28:17 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,13 @@ void	init_philo_threads(t_table *table)
 			&table->philos[i], CREATE);
 		i++;
 	}
+	table->philos->last_meal_time = gettime(MILISECOND);
 }
 
 void	init_monitor_thread(t_table *table)
 {
 	handle_thread(&table->monitor, monitor_routine, table, CREATE);
+	table->philos->last_meal_time = gettime(MILISECOND);
 }
 
 void	wait_all_philo_threads_finish(t_table *table)

@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 18:57:17 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 09:38:23 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 12:57:15 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ void	parse(t_table *table, int argc, char **argv)
 {
 	if (!(check_positive(argc, argv)))
 		error_msg("ERROR: parse() -- All arguments must be positive\n");
-	table->num_philos = ft_atol(argv[1]);
-	table->time_to_die = ft_atol(argv[2]) * 1000;
-	table->time_to_eat = ft_atol(argv[3]) * 1000;
-	table->time_to_sleep = ft_atol(argv[4]) * 1000;
+		table->num_philos = ft_atol(argv[1]);
+		table->time_to_die = ft_atol(argv[2]);           // In milliseconds
+		table->time_to_eat = ft_atol(argv[3]);           // In milliseconds 
+		table->time_to_sleep = ft_atol(argv[4]); 
 	if (argv[5])
 	{
 		table->num_must_meals = ft_atol(argv[5]);

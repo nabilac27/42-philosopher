@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 09:40:29 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 10:36:50 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 12:34:15 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	init_table_struct(t_table *table)
 	table->end_sim = false;
 	table->is_all_threads_ready = false;
 	table->num_threads_ready = 0;
+	table->philo_dead = false;
 	table->philos = handle_malloc(sizeof(t_philo) * table->num_philos);
 	table->forks = handle_malloc(sizeof(t_fork) * table->num_philos);
 	init_table_mutex(table);

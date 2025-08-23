@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 08:21:26 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 10:31:45 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 12:46:57 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,26 @@ void	delay_time(long usec, t_table *table)
 	}
 }
 
-void	precise_sleep(long duration_us)
-{
-	long	start;
+// void	precise_sleep(long duration_us)
+// {
+// 	long	start;
 
-	start = gettime(MILISECOND);
-	while ((gettime(MILISECOND) - start) < duration_us / 1000)
-		usleep(50);
+// 	start = gettime(MILISECOND);
+// 	while ((gettime(MILISECOND) - start) < duration_us / 1000)
+// 		usleep(50);
+// }
+
+
+void precise_sleep(long duration_ms, t_table *table)
+{
+    long start = gettime(MILISECOND);
+    
+    while ((gettime(MILISECOND) - start) < duration_ms)
+    {
+        if (table && table->end_sim)
+            return;
+        usleep(50);
+    }
 }
 
 long	get_elapsed_time(t_table *table)

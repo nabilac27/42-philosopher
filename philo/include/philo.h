@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:37:56 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 09:58:27 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 13:16:27 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,15 @@ typedef struct s_table	t_table;
 typedef struct s_table
 {
 	long				num_philos;
-	long				time_to_die;
-	long				time_to_eat;
+	unsigned long				time_to_die;
+	unsigned long				time_to_eat;
 	long				time_to_sleep;
 	long				num_must_meals;
 	long				start_sim;
 	bool				end_sim;
 	bool				is_all_threads_ready;
 	long				num_threads_ready;
+	volatile bool		philo_dead;
 
 	t_fork				*forks;
 	t_philo				*philos;
@@ -132,6 +133,6 @@ void					*monitor_routine(void *arg);
 void					initial_delay(t_philo *philo);
 void					delay_time(long usec, t_table *table);
 long					gettime(t_time_type type);
-void					precise_sleep(long duration_us);
+void precise_sleep(long duration_ms, t_table *table);
 
 #endif

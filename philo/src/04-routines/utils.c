@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 08:21:26 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 10:03:44 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 10:31:45 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 void initial_delay(t_philo *philo)
 {
     if (philo->philo_id % 2 == 0)
-        usleep(100); // 100 microseconds delay for even IDs
+        usleep(100);
 }
 
 long	gettime(t_time_type type)

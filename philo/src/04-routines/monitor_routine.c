@@ -6,74 +6,145 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 08:23:06 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 10:09:41 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 11:03:13 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-static bool	monitor_died(t_table *table)
+bool	monitor_died(t_table *table)
 {
-	int	i;
+	unsigned long	time;
+	int				x;
 
-	i = 0;
-	while (i < table->num_philos)
+	time = gettime(MILISECOND);
+	x = 0;
+	while (x < table->num_philos)
 	{
-		handle_mutex(&table->philos[i].philo_mutex, LOCK);
-		if (!(table->philos[i].is_full && (gettime(MILISECOND)
-					- table->philos[i].last_meal_time) > table->time_to_die))
+		handle_mutex(&table->philos[x].philo_mutex, LOCK);
+		if ((time - table->philos[x].last_meal_time) >= (unsigned int)table->time_to_die
+			&& !table->philos[x].is_full)
 		{
-			log_status(&table->philos[i], "died");
-			table->end_sim = true;
-			handle_mutex(&table->philos[i].philo_mutex, UNLOCK);
+			handle_mutex(&table->philos[x].philo_mutex, UNLOCK);
 			return (true);
 		}
-		handle_mutex(&table->philos[i].philo_mutex, UNLOCK);
-		i++;
+		handle_mutex(&table->philos[x].philo_mutex, UNLOCK);
+		x++;
 	}
 	return (false);
 }
 
-static bool	monitor_full(t_table *table)
+bool	philo_died(t_table *table)
 {
-	int	i;
-	int	full_count;
+	int	x;
 
-	full_count = 0;
-	i = 0;
-	while (i < table->num_philos)
+	x = 0;
+	while (x < table->num_philos)
 	{
-		handle_mutex(&table->philos[i].philo_mutex, LOCK);
-		if (table->philos[i].is_full)
-			full_count++;
-		handle_mutex(&table->philos[i].philo_mutex, UNLOCK);
-		i++;
-	}
-	if (full_count == table->num_philos)
-	{
-		table->end_sim = true;
-		return (true);
+		handle_mutex(&table->philos[x].philo_mutex, LOCK);
+		if ((gettime(MILISECOND) - table->philos[x].last_meal_time) >= (unsigned int)table->time_to_die
+			&& !table->philos[x].is_full)
+		{
+			log_status(&table->philos[x], "died");
+			table->end_sim = true;
+			handle_mutex(&table->philos[x].philo_mutex, UNLOCK);
+			return (true);
+		}
+		handle_mutex(&table->philos[x].philo_mutex, UNLOCK);
+		x++;
 	}
 	return (false);
 }
 
-void	*monitor_routine(void *arg)
-{
-	t_table	*table;
+// static bool	monitor_died(t_table *table)
+// {
+// 	int	i;
 
-	table = (t_table *)arg;
-	while (!table->is_all_threads_ready)
-		usleep(100);
-	while (!table->end_sim)
-	{
-		if (monitor_died(table))
-			return (NULL);
-		if (monitor_full(table))
-			return (NULL);
-		usleep(1000);
-	}
-	return (NULL);
+// 	i = 0;
+// 	while (i < table->num_philos)
+// 	{
+// 		handle_mutex(&table->philos[i].philo_mutex, LOCK);
+// 		if (!(table->philos[i].is_full && (gettime(MILISECOND)
+// 					- table->philos[i].last_meal_time) > table->time_to_die))
+// 		{
+// 			log_status(&table->philos[i], "died");
+// 			table->end_sim = true;
+// 			handle_mutex(&table->philos[i].philo_mutex, UNLOCK);
+// 			return (true);
+// 		}
+// 		handle_mutex(&table->philos[i].philo_mutex, UNLOCK);
+// 		i++;
+// 	}
+// 	return (false);
+// }
+
+// static bool	monitor_full(t_table *table)
+// {
+// 	int	i;
+// 	int	full_count;
+
+// 	full_count = 0;
+// 	i = 0;
+// 	while (i < table->num_philos)
+// 	{
+// 		handle_mutex(&table->philos[i].philo_mutex, LOCK);
+// 		if (table->philos[i].is_full)
+// 			full_count++;
+// 		handle_mutex(&table->philos[i].philo_mutex, UNLOCK);
+// 		i++;
+// 	}
+// 	if (full_count == table->num_philos)
+// 	{
+// 		table->end_sim = true;
+// 		return (true);
+// 	}
+// 	return (false);
+// }
+
+void    *monitor_routine(void *arg)
+{
+    t_table *table = (t_table *)arg;
+    int i;
+
+    while (!table->end_sim)
+    {
+        i = 0;
+        while (i < table->num_philos && !table->end_sim)
+        {
+            handle_mutex(&table->philos[i].philo_mutex, LOCK);
+            long now = gettime(MILISECOND);
+            if (!table->philos[i].is_full
+                && (now - table->philos[i].last_meal_time) > table->time_to_die)
+            {
+                log_status(&table->philos[i], "died");
+                table->end_sim = true;
+            }
+            handle_mutex(&table->philos[i].philo_mutex, UNLOCK);
+            i++;
+        }
+        usleep(500); // small delay to avoid busy loop
+    }
+    return (NULL);
 }
+
+
+// void	*monitor_routine(void *arg)
+// {
+// 	t_table	*table;
+
+// 	table = (t_table *)arg;
+// 	while (!table->is_all_threads_ready)
+// 		usleep(100);
+// 	while (!table->end_sim)
+// 	{
+// 		if (monitor_died(table))
+// 			return (NULL);
+// 		if (monitor_full(table))
+// 			return (NULL);
+// 		usleep(1000);
+// 	}
+// 	return (NULL);
+// }
 
 void	log_status(t_philo *philo, const char *status)
 {

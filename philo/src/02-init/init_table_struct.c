@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 09:40:29 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 09:40:34 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 10:36:50 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,6 @@ void	init_table_mutex(t_table *table)
 
 void	init_table_struct(t_table *table)
 {
-	int	i;
-
-	i = 0;
 	table->end_sim = false;
 	table->is_all_threads_ready = false;
 	table->num_threads_ready = 0;

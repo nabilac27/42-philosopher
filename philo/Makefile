@@ -6,7 +6,7 @@
 #    By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/23 19:20:28 by nchairun          #+#    #+#              #
-#    Updated: 2025/08/23 14:49:23 by nchairun         ###   ########.fr        #
+#    Updated: 2025/08/23 15:24:09 by nchairun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,8 @@ SRCS		= $(SRCS_DIR)/main.c 							\
 			  $(SRCS_DIR)/03-threads/threads.c				\
 			  $(SRCS_DIR)/04-routines/monitor_routine.c		\
 			  $(SRCS_DIR)/04-routines/philo_routine.c		\
-			  $(SRCS_DIR)/04-routines/utils.c				\
+			  $(SRCS_DIR)/04-routines/philo_routine_utils.c	\
+			  $(SRCS_DIR)/04-routines/time_utils.c			\
 
 BUILD_DIR	= build
 OBJS		= $(SRCS:$(SRCS_DIR)/%.c=$(BUILD_DIR)/src/%.o)

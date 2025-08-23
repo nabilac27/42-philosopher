@@ -6,7 +6,7 @@
 /*   By: nchairun <nchairun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 08:23:06 by nchairun          #+#    #+#             */
-/*   Updated: 2025/08/23 15:14:32 by nchairun         ###   ########.fr       */
+/*   Updated: 2025/08/23 15:28:16 by nchairun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ bool	check_philo_died(t_table *table)
 			table->philo_dead = true;
 			table->end_sim = true;
 			handle_mutex(&table->philos[i].philo_mutex, UNLOCK);
-			printf("Philosopher %ld died, ending simulation.\n",
-				table->philos[i].philo_id);
 			return (true);
 		}
 		handle_mutex(&table->philos[i].philo_mutex, UNLOCK);
@@ -65,8 +63,6 @@ bool	check_philo_died(t_table *table)
 void	*monitor_routine(void *arg)
 {
 	t_table			*table;
-	int				i;
-	unsigned long	now;
 
 	table = (t_table *)arg;
 	while (!(table->is_all_threads_ready))
@@ -75,7 +71,7 @@ void	*monitor_routine(void *arg)
 	{
 		if (all_philos_full(table))
 			break ;
-		if (check_for_deaths(table))
+		if (check_philo_died(table))
 			return (NULL);
 	}
 	usleep(50);
